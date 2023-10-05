@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['.f-bazaar.com','159.203.164.0','localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.f-bazaar.com','159.223.174.201','localhost', '127.0.0.1']
 
 
 # Application definition
@@ -146,9 +146,9 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'next/static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR,'next/static')
+# ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'

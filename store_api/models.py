@@ -15,7 +15,7 @@ ITEM_SIZE =(
 )
 
 class StoreItem(models.Model):
-    name = models.CharField(max_length=255,unique=True)
+    name = models.CharField(max_length=255)
     category = models.CharField(max_length=80, default="Water",choices=ITEM_CATEGORIES)
     size = models.CharField(max_length=30, choices=ITEM_SIZE, default="Small",blank=True)
     old_price = models.DecimalField(max_digits=19, decimal_places=2, blank=True,default=0.0)

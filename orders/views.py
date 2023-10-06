@@ -6,6 +6,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from datetime import datetime, date, time
+from django.core.mail import EmailMessage
+from .sendemail import send_my_mail
 
 
 @api_view(['POST'])
@@ -101,3 +103,8 @@ def add_dropped_off_orders(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+# send_my_mail(f"Hi from ConnectDjango", settings.EMAIL_HOST_USER, i.email, {"name": i.username},
+#                          "email_templates/success.html")

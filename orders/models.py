@@ -45,7 +45,7 @@ class OrderItem(models.Model):
     item_dropped_off = models.BooleanField(default=False)
 
     def __str__(self):
-        return
+        return self.item.name
 
 class ClearedPickUps(models.Model):
     order_item = models.ForeignKey(OrderItem,on_delete=models.CASCADE)

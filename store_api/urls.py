@@ -16,4 +16,7 @@ urlpatterns = [
 
     path("add_rating/",views.add_rating),
     path("ratings/",views.get_all_ratings),
+
+    path("item/<int:id>/ratings/",views.get_all_item_ratings),
+    path("item/<int:id>/remarks/",views.get_all_item_remarks),
 ]

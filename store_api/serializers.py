@@ -10,7 +10,7 @@ class StoreItemSerializer(serializers.ModelSerializer):
 class ItemRatingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemRatings
-        fields = "__all__"
+        fields = ['id','item','user','rating','date_rated']
         read_only_fields = ['user']
 
 class AddToPriceChangedSerializer(serializers.ModelSerializer):
@@ -22,5 +22,5 @@ class AddToPriceChangedSerializer(serializers.ModelSerializer):
 class ItemRemarksSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemRemarks
-        fields = "__all__"
+        fields = ['id','item','user','remark','date_added','get_username']
         read_only_fields = ['user']

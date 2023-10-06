@@ -103,3 +103,21 @@ def get_all_ratings(request):
     remarks = ItemRatings.objects.all().order_by('-date_rated')
     serializer = ItemRatingsSerializer(remarks, many=True)
     return Response(serializer.data)
+
+# get item ratings and remarks
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_item_ratings(request,id):
+    item = get_object_or_404(StoreItem, id=id)
+    ratings = ItemRatings.objects.filter(item=item).order_by('-date_rated')
+    serializer = ItemRatingsSerializer(ratings, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_item_remarks(request,id):
+    item = get_object_or_404(StoreItem, id=id)
+    remarks = ItemRemarks.objects.filter(item=item).order_by('-date_added')
+    serializer = ItemRemarksSerializer(remarks, many=True)
+    return Response(serializer.data)

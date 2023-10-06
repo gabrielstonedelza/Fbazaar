@@ -55,13 +55,14 @@ class AddToPriceChanged(models.Model):
         return f"{self.item.name}'s price has changed"
 
 class ItemRatings(models.Model):
-    store = models.ForeignKey(StoreItem,on_delete=models.CASCADE)
+    item = models.ForeignKey(StoreItem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="user_rating")
     rating = models.IntegerField(default=0)
     date_rated = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.rating)
+
 
 class ItemRemarks(models.Model):
     item = models.ForeignKey(StoreItem, on_delete=models.CASCADE)
@@ -72,3 +73,6 @@ class ItemRemarks(models.Model):
 
     def __str__(self):
         return f"{self.user.username} gave a remark "
+
+    def get_username(self):
+        return self.user.username

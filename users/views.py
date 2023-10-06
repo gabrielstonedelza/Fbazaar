@@ -23,3 +23,25 @@ def update_user(request, id):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def get_all_customers(request):
+    customers = User.objects.filter(user_type="Customer")
+    serializer = UsersSerializer(customers, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def get_all_drivers(request):
+    drivers = User.objects.filter(user_type="Driver")
+    serializer = UsersSerializer(drivers, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def get_all_wholesale_managers(request):
+    managers = User.objects.filter(user_type="Warehouse Manager")
+    serializer = UsersSerializer(managers, many=True)
+    return Response(serializer.data)

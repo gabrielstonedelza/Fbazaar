@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from datetime import datetime, date, time
+from rest_framework import filters
 
 # add and update items
 @api_view(['POST'])
@@ -121,3 +122,9 @@ def get_all_item_remarks(request,id):
     remarks = ItemRemarks.objects.filter(item=item).order_by('-date_added')
     serializer = ItemRemarksSerializer(remarks, many=True)
     return Response(serializer.data)
+
+class SearchForItem(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = StoreItemSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'category']

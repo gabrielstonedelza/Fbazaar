@@ -8,7 +8,7 @@ from .models import User
 # Create your views here.
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permissions.AllowAny])
 def get_users(request):
     users = User.objects.all()
     serializer = UsersSerializer(users, many=True)

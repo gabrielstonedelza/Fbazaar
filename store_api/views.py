@@ -28,6 +28,14 @@ def get_all_items(request):
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_item_detail(request,id):
+    item = get_object_or_404(StoreItem,id=id)
+    serializer = StoreItemSerializer(item, many=False)
+    return Response(serializer.data)
+
 @api_view(['GET', 'PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def update_item(request, id):

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path("add_item/",views.add_item),
     path("items/",views.get_all_items),
+    path("items/<int:id>/detail/",views.get_item_detail),
     path("items/<int:id>/update/",views.update_item),
     path("items/<int:id>/delete/",views.delete_item),
 

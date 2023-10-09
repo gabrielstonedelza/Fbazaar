@@ -5,8 +5,6 @@ from .models import  Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    username = serializers.SerializerMethodField('get_username')
-
     class Meta:
         model = Profile
         fields = ['id','user', 'profile_pic', 'get_profile_pic', 'get_phone',

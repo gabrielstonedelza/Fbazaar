@@ -1,11 +1,11 @@
 from django.db import models
+
 from users.models import User
 from store_api.models import StoreItem
 
-class Cart(models.Model):
+class Favorites(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    item = models.ForeignKey(StoreItem,on_delete=models.CASCADE,related_name="item")
-    price = models.DecimalField(max_digits=19, decimal_places=2, blank=True, default=0.0)
+    item = models.ForeignKey(StoreItem, on_delete=models.CASCADE,related_name='favorites')
     date_added = models.DateTimeField(auto_now_add=True)
 
     def get_item_name(self):
@@ -22,4 +22,3 @@ class Cart(models.Model):
 
     def __str__(self):
         return self.item.name
-

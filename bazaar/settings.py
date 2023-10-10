@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'orders.apps.OrdersConfig',
     'cart.apps.CartConfig',
+    'favorites.apps.FavoritesConfig',
     'djoser',
     'corsheaders',
     'crispy_forms',

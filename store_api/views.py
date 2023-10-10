@@ -70,10 +70,11 @@ def add_to_price_change(request):
 # remarks
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
-def add_remarks(request):
+def add_remarks(request,id):
+    item = get_object_or_404(StoreItem, id=id)
     serializer = ItemRemarksSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(user=request.user)
+        serializer.save(user=request.user,item=item)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

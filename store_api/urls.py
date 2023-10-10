@@ -11,7 +11,7 @@ urlpatterns = [
 
     path("add_to_price_change/",views.add_to_price_change),
 
-    path("add_remarks/",views.add_remarks),
+    path("add_remarks/<int:id>/",views.add_remarks),
     path("remarks/",views.get_all_remarks),
     path("remark/<int:id>/delete",views.delete_remark),
 

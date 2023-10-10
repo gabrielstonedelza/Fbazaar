@@ -23,4 +23,4 @@ class ItemRemarksSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemRemarks
         fields = ['id','item','user','remark','date_added','get_username']
-        read_only_fields = ['user']
+        read_only_fields = ['user','item']

@@ -45,6 +45,11 @@ class OrderItem(models.Model):
     item_dropped_off = models.BooleanField(default=False)
     ordered = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        total_price = float(self.price) * float(self.quantity)
+        self.price = total_price
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.item.name
 

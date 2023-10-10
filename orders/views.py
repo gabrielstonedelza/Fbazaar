@@ -10,12 +10,13 @@ from django.core.mail import EmailMessage
 from .sendemail import send_my_mail
 
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 @permission_classes([permissions.IsAuthenticated])
-def place_order(request):
+def place_order(request,id):
+    item = get_object_or_404(StoreItem, id=id)
     serializer = OrderItemSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(user=request.user)
+        serializer.save(user=request.user,item=item)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

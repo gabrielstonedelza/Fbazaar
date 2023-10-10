@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns =[
-    path("place_order/",views.place_order),
+    path("place_order/<int:id>/",views.place_order),
     path("my_order/",views.get_my_orders),
     path("clear_order/",views.add_to_cleared),
     path("cleared_orders/",views.get_cleared_for_pickup),

@@ -7,16 +7,6 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from store_api.models import StoreItem
 
-
-# @api_view(['POST'])
-# @permission_classes([permissions.IsAuthenticated])
-# def add_item_to_favorites(request):
-#     serializer = FavoritesSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save(user=request.user)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 @api_view(['GET','POST'])
 @permission_classes([permissions.IsAuthenticated])
 def add_item_to_favorites(request,id):
@@ -46,3 +36,12 @@ def delete_item_from_favorites(request, id):
     except Favorites.DoesNotExist:
         return Http404
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def clear_favorites(request):
+    items = Favorites.objects.filter(user=request.user)
+    for item in items:
+        item.delete()
+    serializer = FavoritesSerializer(items,many=True)
+    return Response(serializer.data)

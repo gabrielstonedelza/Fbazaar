@@ -43,9 +43,21 @@ class OrderItem(models.Model):
     order_pick_up_status = models.CharField(max_length=50,default="Not cleared for pickup", choices=PICK_UP_STATUS)
     order_picked_up_status = models.CharField(max_length=50,default="Items not picked up yet", choices=PICKED_UP_STATUS)
     item_dropped_off = models.BooleanField(default=False)
+    ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return self.item.name
+
+    def get_item_name(self):
+        return self.item.name
+
+    def get_username(self):
+        return self.user.username
+
+    def get_item_pic(self):
+        if self.item.picture:
+            return "https://f-bazaar.com" + self.item.picture.url
+        return ''
 
 class ClearedPickUps(models.Model):
     order_item = models.ForeignKey(OrderItem,on_delete=models.CASCADE)

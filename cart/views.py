@@ -46,3 +46,12 @@ def delete_item_from_cart(request, id):
     except Cart.DoesNotExist:
         return Http404
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def clear_cart(request):
+    items = Cart.objects.filter(user=request.user)
+    for item in items:
+        item.delete()
+    serializer = CartSerializer(items,many=True)
+    return Response(serializer.data)

@@ -55,3 +55,28 @@ def clear_cart(request):
         item.delete()
     serializer = CartSerializer(items,many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET','PUT'])
+@permission_classes([permissions.IsAuthenticated])
+def increase_item_quantity(request,id):
+    item = get_object_or_404(StoreItem, id=id)
+    serializer = CartSerializer(data=request.data)
+    if serializer.is_valid():
+        item.quantity += 1
+        item.save()
+        # serializer.save(user=request.user, food=food)
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET','PUT'])
+@permission_classes([permissions.IsAuthenticated])
+def decrease_item_quantity(request,id):
+    item = get_object_or_404(StoreItem, id=id)
+    serializer = CartSerializer(data=request.data)
+    if serializer.is_valid():
+        item.quantity -= 1
+        item.save()
+        # serializer.save(user=request.user, food=food)
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

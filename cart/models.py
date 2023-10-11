@@ -5,7 +5,7 @@ from store_api.models import StoreItem
 class Cart(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     item = models.ForeignKey(StoreItem,on_delete=models.CASCADE,related_name="item")
-    quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField(default=0)
     price = models.DecimalField(max_digits=19, decimal_places=2, blank=True, default=0.0)
     date_added = models.DateTimeField(auto_now_add=True)
 

@@ -12,10 +12,6 @@ class Cart(models.Model):
     def get_item_name(self):
         return self.item.name
 
-    def save(self, *args, **kwargs):
-        total_price = float(self.price) * float(self.quantity)
-        self.price = total_price
-        super().save(*args, **kwargs)
 
     def get_item_price(self):
         return self.item.new_price

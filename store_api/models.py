@@ -24,6 +24,8 @@ class StoreItem(models.Model):
     wholesale_price = models.DecimalField(max_digits=19, decimal_places=2, blank=True,default=0.0)
     picture = models.ImageField(upload_to="store_items",blank=True)
     description = models.TextField(blank=True)
+    exclusive = models.BooleanField(default=False)
+    promotion = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     quantity_qualify_for_free_delivery = models.IntegerField(default=20)
     quantity_needed_for_wholesale_price = models.IntegerField(default=20)

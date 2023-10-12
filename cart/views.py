@@ -59,13 +59,13 @@ def clear_cart(request):
 
 @api_view(['GET','PUT'])
 @permission_classes([permissions.IsAuthenticated])
-def increase_item_quantity(request,id):
+def increase_item_quantity(request,id,item_id):
+    item = get_object_or_404(StoreItem, id=item_id)
     cart_item = get_object_or_404(Cart, id=id)
     serializer = CartSerializer(data=request.data)
     if serializer.is_valid():
         cart_item.quantity += 1
-        new_price = cart_item.price * cart_item.quantity
-        cart_item.price = new_price
+        cart_item.price = item.new_price * cart_item.quantity
         cart_item.save()
         # serializer.save(user=request.user, food=food)
         return Response(serializer.data)
@@ -73,13 +73,13 @@ def increase_item_quantity(request,id):
 
 @api_view(['GET','PUT'])
 @permission_classes([permissions.IsAuthenticated])
-def decrease_item_quantity(request,id):
+def decrease_item_quantity(request,id,item_id):
+    item = get_object_or_404(StoreItem, id=item_id)
     cart_item = get_object_or_404(Cart, id=id)
     serializer = CartSerializer(data=request.data)
     if serializer.is_valid():
         cart_item.quantity -= 1
-        new_price = cart_item.price * cart_item.quantity
-        cart_item.price = new_price
+        cart_item.price = item.new_price * cart_item.quantity
         cart_item.save()
         # serializer.save(user=request.user, food=food)
         return Response(serializer.data)

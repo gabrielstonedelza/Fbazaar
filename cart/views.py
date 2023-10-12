@@ -60,11 +60,11 @@ def clear_cart(request):
 @api_view(['GET','PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def increase_item_quantity(request,id):
-    item = get_object_or_404(StoreItem, id=id)
+    cart_item = get_object_or_404(Cart, id=id)
     serializer = CartSerializer(data=request.data)
     if serializer.is_valid():
-        item.quantity += 1
-        item.save()
+        cart_item.quantity += 1
+        cart_item.save()
         # serializer.save(user=request.user, food=food)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -72,11 +72,11 @@ def increase_item_quantity(request,id):
 @api_view(['GET','PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def decrease_item_quantity(request,id):
-    item = get_object_or_404(StoreItem, id=id)
+    cart_item = get_object_or_404(Cart, id=id)
     serializer = CartSerializer(data=request.data)
     if serializer.is_valid():
-        item.quantity -= 1
-        item.save()
+        cart_item.quantity -= 1
+        cart_item.save()
         # serializer.save(user=request.user, food=food)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -64,6 +64,8 @@ def increase_item_quantity(request,id):
     serializer = CartSerializer(data=request.data)
     if serializer.is_valid():
         cart_item.quantity += 1
+        new_price = cart_item.price * cart_item.quantity
+        cart_item.price = new_price
         cart_item.save()
         # serializer.save(user=request.user, food=food)
         return Response(serializer.data)
@@ -76,6 +78,8 @@ def decrease_item_quantity(request,id):
     serializer = CartSerializer(data=request.data)
     if serializer.is_valid():
         cart_item.quantity -= 1
+        new_price = cart_item.price * cart_item.quantity
+        cart_item.price = new_price
         cart_item.save()
         # serializer.save(user=request.user, food=food)
         return Response(serializer.data)

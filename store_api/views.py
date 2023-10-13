@@ -137,3 +137,6 @@ class SearchForItem(generics.ListAPIView):
     serializer_class = StoreItemSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'category']
+
+    def get_queryset(self):
+        return StoreItem.objects.all()

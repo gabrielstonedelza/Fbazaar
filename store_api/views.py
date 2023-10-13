@@ -137,4 +137,4 @@ class SearchForItem(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = StoreItemSerializer
     filter_backends = [SearchFilter]
-    search_fields = ['name', 'category']
+    search_fields = ('name', 'category')

@@ -9,7 +9,6 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from datetime import datetime, date, time
 from rest_framework import filters
-from rest_framework.filters import SearchFilter
 
 # add and update items
 @api_view(['POST'])
@@ -135,6 +134,7 @@ def get_all_item_remarks(request,id):
 
 class SearchForItem(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    queryset = StoreItem.objects.all().order_by("-date_created")
     serializer_class = StoreItemSerializer
-    filter_backends = [SearchFilter]
-    search_fields = ('name', 'category')
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'category']

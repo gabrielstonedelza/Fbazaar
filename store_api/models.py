@@ -70,6 +70,7 @@ class ItemRemarks(models.Model):
     item = models.ForeignKey(StoreItem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_making_remarks")
     remark = models.TextField()
+    rating = models.IntegerField(default=0)
     date_added = models.DateTimeField(auto_now_add=True)
 
 

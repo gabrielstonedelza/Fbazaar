@@ -22,5 +22,5 @@ class AddToPriceChangedSerializer(serializers.ModelSerializer):
 class ItemRemarksSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemRemarks
-        fields = ['id','item','user','remark','date_added','get_username']
+        fields = ['id','item','user','remark','date_added','get_username','rating']
         read_only_fields = ['user','item']

@@ -85,5 +85,5 @@ class ItemRemarks(models.Model):
     def get_profile_pic(self):
         de_user = Profile.objects.get(user=self.user)
         if de_user:
-            return "https://f-bazaar.com" + self.de_user.profile_pic.url
+            return "https://f-bazaar.com" + de_user.profile_pic.url
         return ''

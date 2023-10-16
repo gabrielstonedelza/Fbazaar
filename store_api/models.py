@@ -1,6 +1,7 @@
 from django.db import models
 from PIL import Image
 from users.models import User
+from profiles.models import Profile
 
 ITEM_CATEGORIES = (
     ("Water","Water"),
@@ -23,6 +24,7 @@ class StoreItem(models.Model):
     retail_price = models.DecimalField(max_digits=19, decimal_places=2, blank=True,default=0.0)
     wholesale_price = models.DecimalField(max_digits=19, decimal_places=2, blank=True,default=0.0)
     picture = models.ImageField(upload_to="store_items",blank=True)
+    volume = models.IntegerField(default=0)
     description = models.TextField(blank=True)
     exclusive = models.BooleanField(default=False)
     promotion = models.BooleanField(default=False)
@@ -79,3 +81,9 @@ class ItemRemarks(models.Model):
 
     def get_username(self):
         return self.user.username
+
+    def get_profile_pic(self):
+        user = Profile.objects.get(user=self.user)
+        if user:
+            return "https://f-bazaar.com" + self.user.profile_pic.url
+        return ''

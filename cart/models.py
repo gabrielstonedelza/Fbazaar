@@ -16,6 +16,9 @@ class Cart(models.Model):
     def get_item_price(self):
         return self.item.new_price
 
+    def get_item_size(self):
+        return self.item.size
+
     def get_item_pic(self):
         if self.item.picture:
             return "https://f-bazaar.com" + self.item.picture.url

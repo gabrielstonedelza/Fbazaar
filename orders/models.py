@@ -39,6 +39,11 @@ ORDER_STATUS = (
     ("Delivered","Delivered"),
 )
 
+DELIVERY_METHOD = (
+    ("Delivery","Delivery"),
+    ("Pick Up","Pick Up"),
+)
+
 class OrderItem(models.Model):
     cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_purchasing")
@@ -51,6 +56,7 @@ class OrderItem(models.Model):
     drop_off_location_lng = models.CharField(max_length=255,blank=True)
     date_order_created = models.DateTimeField(auto_now_add=True)
     order_status = models.CharField(max_length=70,choices=ORDER_STATUS,default="Pending")
+    delivery_method = models.CharField(max_length=50,default="Delivery")
     ordered = models.BooleanField(default=False)
     unique_order_code = models.CharField(max_length=255,default="")
 

@@ -8,15 +8,17 @@ from rest_framework.response import Response
 from datetime import datetime, date, time
 from django.core.mail import EmailMessage
 from .sendemail import send_my_mail
+from cart.models import Cart
+from cart.serializers import CartSerializer
 
 
 @api_view(['GET','POST'])
 @permission_classes([permissions.IsAuthenticated])
 def place_order(request,id):
-    item = get_object_or_404(StoreItem, id=id)
-    serializer = OrderItemSerializer(data=request.data)
+    cart = get_object_or_404(Cart, id=id)
+    serializer = CartSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(user=request.user,item=item)
+        serializer.save(user=request.user,cart=cart)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

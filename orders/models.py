@@ -30,6 +30,14 @@ PICKED_UP_STATUS=(
     ("Items not picked up yet","Items not picked up yet"),
 )
 
+ORDER_STATUS = (
+    ("Pending","Pending"),
+    ("Processing","Processing"),
+    ("Picked Up","Picked Up"),
+    ("In Transit","In Transit"),
+    ("Delivered","Delivered"),
+)
+
 class OrderItem(models.Model):
     item = models.ForeignKey(StoreItem,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_purchasing")
@@ -41,9 +49,7 @@ class OrderItem(models.Model):
     drop_off_location_lat = models.CharField(max_length=255,blank=True)
     drop_off_location_lng = models.CharField(max_length=255,blank=True)
     date_order_created = models.DateTimeField(auto_now_add=True)
-    order_pick_up_status = models.CharField(max_length=50,default="Not cleared for pickup", choices=PICK_UP_STATUS)
-    order_picked_up_status = models.CharField(max_length=50,default="Items not picked up yet", choices=PICKED_UP_STATUS)
-    item_dropped_off = models.BooleanField(default=False)
+    order_status = models.CharField(max_length=70,choices=ORDER_STATUS,default="Pending")
     ordered = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):

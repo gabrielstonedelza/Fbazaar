@@ -79,6 +79,9 @@ class OrderItem(models.Model):
             return "https://f-bazaar.com" + self.cart.item.picture.url
         return ''
 
+    def get_item_size(self):
+        return self.cart.item.size
+
 class ClearedPickUps(models.Model):
     order_item = models.ForeignKey(OrderItem,on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)

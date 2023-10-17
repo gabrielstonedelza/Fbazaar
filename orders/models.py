@@ -97,6 +97,11 @@ class ItemsPickedUp(models.Model):
         return f"{self.order_item.pk} has been picked up by driver"
 
 
+    def get_username(self):
+        return self.user.username
+
+
+
 class ItemsDroppedOff(models.Model):
     order_item = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="driver")

@@ -17,7 +17,8 @@ class ClearedPickUpsSerializer(serializers.ModelSerializer):
 class ItemsPickedUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemsPickedUp
-        fields = "__all__"
+        fields = ['id','order_item','user','date_created','get_username']
+        read_only_fields = ['user']
 
 
 class ItemsDroppedOffSerializer(serializers.ModelSerializer):

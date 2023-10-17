@@ -24,6 +24,9 @@ class Cart(models.Model):
             return "https://f-bazaar.com" + self.item.picture.url
         return ''
 
+    def get_item_category(self):
+        return self.item.category
+
 
     def __str__(self):
         return self.item.name

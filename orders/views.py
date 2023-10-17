@@ -16,7 +16,7 @@ from cart.serializers import CartSerializer
 @permission_classes([permissions.IsAuthenticated])
 def place_order(request,id):
     cart = get_object_or_404(Cart, id=id)
-    serializer = CartSerializer(data=request.data)
+    serializer = OrderItemSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save(user=request.user,cart=cart)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

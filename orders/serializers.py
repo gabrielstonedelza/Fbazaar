@@ -5,7 +5,7 @@ from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,Qua
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ['id','item','user','quantity','category','size','price','payment_method','drop_off_location','date_order_created','order_pick_up_status','order_picked_up_status','item_dropped_off','ordered','get_item_name','get_username','get_item_pic']
+        fields = ['id','item','user','quantity','category','size','price','payment_method','drop_off_location_lat','drop_off_location_lng','date_order_created','order_pick_up_status','order_picked_up_status','item_dropped_off','ordered','get_item_name','get_username','get_item_pic']
         read_only_fields = ['user','item']
 
 

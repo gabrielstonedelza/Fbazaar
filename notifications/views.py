@@ -21,7 +21,7 @@ def get_my_notifications(request):
 @permission_classes([permissions.IsAuthenticated])
 def get_my_unread_notifications(request):
     notifications = Notifications.objects.filter(notification_to=request.user).filter(read="Not Read").order_by('date_created')
-    serializer = NotificationSerializer(notifications,many=True)
+    serializer = NotificationsSerializer(notifications,many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -30,7 +30,7 @@ def get_triggered_notifications(request):
     notifications = Notifications.objects.filter(notification_to=request.user).filter(
         notification_trigger="Triggered").filter(
         read="Not Read").order_by('-date_created')[:50]
-    serializer = NotificationSerializer(notifications, many=True)
+    serializer = NotificationsSerializer(notifications, many=True)
     return Response(serializer.data)
 
 
@@ -43,14 +43,14 @@ def read_notification(request):
         i.read = "Read"
         i.save()
 
-    serializer = NotificationSerializer(notifications, many=True)
+    serializer = NotificationsSerializer(notifications, many=True)
     return Response(serializer.data)
 
 @api_view(['GET', 'PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def un_trigger_notification(request, id):
     notification = get_object_or_404(Notifications, id=id)
-    serializer = NotificationSerializer(notification, data=request.data)
+    serializer = NotificationsSerializer(notification, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)

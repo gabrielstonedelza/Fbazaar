@@ -20,7 +20,7 @@ def update_user(request, id):
     user = get_object_or_404(User, id=id)
     serializer = UsersSerializer(user, data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

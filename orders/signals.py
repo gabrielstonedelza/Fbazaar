@@ -39,7 +39,7 @@ def alert_order_cleared_for_pickup(sender, created, instance, **kwargs):
                                      notification_from=admin_user, notification_to=wear_house_manager,
                                      )
         send_my_mail(f"Item Cleared", settings.EMAIL_HOST_USER, user_ordering.email,
-                     {"item_name": instance.order_item.item.name,
+                     {"item_name": instance.order_item.cart.name,
                       "username": instance.order_item.user.username,"quantity":instance.order_item.quantity},
                      "email_templates/cleared_for_pickup_email.html")
 

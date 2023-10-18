@@ -19,19 +19,38 @@ def get_my_notifications(request):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
-def get_my_triggered_notifications(request):
+def get_my_unread_notifications(request):
+    notifications = Notifications.objects.filter(notification_to=request.user).filter(read="Not Read").order_by('date_created')
+    serializer = NotificationSerializer(notifications,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_triggered_notifications(request):
     notifications = Notifications.objects.filter(notification_to=request.user).filter(
         notification_trigger="Triggered").filter(
-        read="Not Read").order_by('-date_created')
-    serializer = NotificationsSerializer(notifications, many=True)
+        read="Not Read").order_by('-date_created')[:50]
+    serializer = NotificationSerializer(notifications, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET', 'PUT'])
 @permission_classes([permissions.IsAuthenticated])
-def read_notification(request, id):
+def read_notification(request):
+    notifications = Notifications.objects.filter(notification_to=request.user).filter(
+        read="Not Read").order_by('-date_created')
+    for i in notifications:
+        i.read = "Read"
+        i.save()
+
+    serializer = NotificationSerializer(notifications, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET', 'PUT'])
+@permission_classes([permissions.IsAuthenticated])
+def un_trigger_notification(request, id):
     notification = get_object_or_404(Notifications, id=id)
-    serializer = NotificationsSerializer(notification, data=request.data)
+    serializer = NotificationSerializer(notification, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)

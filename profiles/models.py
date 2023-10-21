@@ -6,7 +6,6 @@ DeUser = settings.AUTH_USER_MODEL
 
 class Profile(models.Model):
     user = models.OneToOneField(DeUser, on_delete=models.CASCADE, related_name="profile_user")
-    full_name = models.CharField(max_length=100,unique=True,blank=True)
     profile_pic = models.ImageField(upload_to="profile_pics", default="default_user.png")
 
     def __str__(self):

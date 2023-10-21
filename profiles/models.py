@@ -21,6 +21,9 @@ class Profile(models.Model):
     def get_username(self):
         return self.user.username
 
+    def get_users_fullname(self):
+        return self.user.name
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 

@@ -5,6 +5,9 @@ from . import views
 urlpatterns = [
     path("add_item/",views.add_item),
     path("items/",views.get_all_items),
+    path("exclusive_items/",views.get_exclusive_items),
+    path("promotion_items/",views.get_promotion_items),
+    path("other_items/",views.get_other_items),
     path("items/<int:id>/detail/",views.get_item_detail),
     path("items/<int:id>/update/",views.update_item),
     path("items/<int:id>/delete/",views.delete_item),
@@ -21,5 +24,5 @@ urlpatterns = [
     path("item/<int:id>/ratings/",views.get_all_item_ratings),
     path("item/<int:id>/remarks/",views.get_all_item_remarks),
 
-    path("search_item/",views.SearchForItem.as_view())
+    path("search_item/",views.SearchForItem.as_view()),
 ]

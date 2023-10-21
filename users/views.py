@@ -6,6 +6,8 @@ from .serializers import UsersSerializer
 from .models import User
 
 # Create your views here.
+def home(request):
+    return render(request,"users/home.html")
 
 @api_view(['GET'])
 @permission_classes([permissions.AllowAny])

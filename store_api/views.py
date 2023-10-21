@@ -138,3 +138,28 @@ class SearchForItem(generics.ListAPIView):
     serializer_class = StoreItemSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'category']
+
+    # get exclusive, promotion and other items
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_exclusive_items(request):
+    items = StoreItem.objects.filter(exclusive=True).order_by('-date_created')
+    serializer = StoreItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_promotion_items(request):
+    items = StoreItem.objects.filter(promotion=True).order_by('-date_created')
+    serializer = StoreItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_other_items(request):
+    items = StoreItem.objects.filter(promotion=False).filter(exclusive=False).order_by('-date_created')
+    serializer = StoreItemSerializer(items, many=True)
+    return Response(serializer.data)

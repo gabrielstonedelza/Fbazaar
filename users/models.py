@@ -15,7 +15,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, max_length=255)
     phone = models.CharField(max_length=15, unique=True, help_text="please format should be +233")
     user_type = models.CharField(max_length=80,choices=USER_TYPES,default="Customer")
-    name = models.CharField(max_length=100, unique=True, default="")
+    name = models.CharField(max_length=100, unique=True)
     user_blocked = models.BooleanField(default=False)
     agreed_to_supplied = models.BooleanField(default=False)
 

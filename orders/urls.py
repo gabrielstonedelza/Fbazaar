@@ -4,6 +4,10 @@ from . import views
 urlpatterns =[
     path("place_order/<int:id>/",views.place_order),
     path("my_orders/",views.get_my_orders),
+    path("pending_orders/",views.get_all_pending_orders),
+    path("processing_orders/",views.get_all_processing_orders),
+    path("picked_up_orders/",views.get_all_piked_up_orders),
+    path("delivered_orders/",views.get_all_delivered_orders),
     path("clear_order/",views.add_to_cleared),
     path("cleared_orders/",views.get_cleared_for_pickup),
     path("picked_up_orders/",views.get_orders_picked_up),

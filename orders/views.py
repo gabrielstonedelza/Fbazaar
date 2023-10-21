@@ -53,7 +53,7 @@ def delete_order(request, id):
 
 # cleared for pickup
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permissions.AllowAny])
 def add_to_cleared(request):
     serializer = ClearedPickUpsSerializer(data=request.data)
     if serializer.is_valid():

@@ -12,6 +12,9 @@ class Cart(models.Model):
     def get_item_name(self):
         return self.item.name
 
+    def get_username(self):
+        return self.user.username
+
 
     def get_item_price(self):
         return self.item.new_price

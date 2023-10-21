@@ -28,7 +28,7 @@ def alert_order(sender, created, instance, **kwargs):
 @receiver(post_save, sender=ClearedPickUps)
 def alert_order_cleared_for_pickup(sender, created, instance, **kwargs):
     title = f"Order cleared"
-    message = f"{instance.order_item.cart.item.name} has been cleared for pickup"
+    message = f"{instance.order_item.cart.item.name} has been cleared for processing and pickup"
     admin_user = User.objects.get(id=1)
     wear_house_manager = User.objects.get(username="wholesale")
     user_ordering = User.objects.get(username=instance.order_item.user.username)

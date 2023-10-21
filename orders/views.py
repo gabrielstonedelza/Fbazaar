@@ -88,7 +88,7 @@ def get_orders_dropped_off(request):
 
 # orders picked up
 @api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated])
+@permission_classes([permissions.AllowAny])
 def add_to_picked_up_orders(request):
     serializer = ItemsPickedUpSerializer(data=request.data)
     if serializer.is_valid():

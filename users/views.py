@@ -47,3 +47,11 @@ def get_all_wholesale_managers(request):
     managers = User.objects.filter(user_type="Warehouse Manager")
     serializer = UsersSerializer(managers, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def get_admin(request):
+    admin_user = User.objects.filter(user_type="Administrator")
+    serializer = UsersSerializer(admin_user, many=True)
+    return Response(serializer.data)

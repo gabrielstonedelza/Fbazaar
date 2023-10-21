@@ -46,7 +46,7 @@ def alert_order_cleared_for_pickup(sender, created, instance, **kwargs):
 @receiver(post_save, sender=ItemsPickedUp)
 def alert_order_picked_up(sender, created, instance, **kwargs):
     title = f"Order Picked up"
-    message = f"{instance.order_item.pk} has been picked up and on the way"
+    message = f"{instance.order_item.cart.item.name} has been picked up and on the way"
     admin_user = User.objects.get(id=1)
     user_ordering = User.objects.get(username=instance.order_item.user.username)
 

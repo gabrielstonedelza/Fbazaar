@@ -86,6 +86,8 @@ class OrderItem(models.Model):
         return self.cart.price
 
 
+
+
 class ClearedPickUps(models.Model):
     order_item = models.ForeignKey(OrderItem,on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -136,6 +138,8 @@ class ItemsDroppedOff(models.Model):
 
     def get_order_status(self):
         return self.order_item.order_status
+    def get_item_price(self):
+        return self.order_item.price
     
 
 class QualifiedForBonuses(models.Model):

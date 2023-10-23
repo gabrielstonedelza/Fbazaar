@@ -163,3 +163,18 @@ def get_other_items(request):
     items = StoreItem.objects.filter(promotion=False).filter(exclusive=False).order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_drinks(request):
+    items = StoreItem.objects.filter(category="Drinks").order_by('-date_created')
+    serializer = StoreItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_water(request):
+    items = StoreItem.objects.filter(category="Water").order_by('-date_created')
+    serializer = StoreItemSerializer(items, many=True)
+    return Response(serializer.data)

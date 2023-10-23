@@ -8,6 +8,8 @@ urlpatterns = [
     path("exclusive_items/",views.get_exclusive_items),
     path("promotion_items/",views.get_promotion_items),
     path("other_items/",views.get_other_items),
+    path("get_drinks/",views.get_drinks),
+    path("get_water/",views.get_water),
     path("items/<int:id>/detail/",views.get_item_detail),
     path("items/<int:id>/update/",views.update_item),
     path("items/<int:id>/delete/",views.delete_item),

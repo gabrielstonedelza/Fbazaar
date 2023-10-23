@@ -24,7 +24,8 @@ class ItemsPickedUpSerializer(serializers.ModelSerializer):
 class ItemsDroppedOffSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemsDroppedOff
-        fields = "__all__"
+        fields = ['id','order_item','user','date_created','get_item_name','get_item_size','get_item_pic','get_ordered_username','get_order_quantity','get_order_status']
+        read_only_fields = ['user']
 
 class QualifiedForBonusesSerializer(serializers.ModelSerializer):
     class Meta:

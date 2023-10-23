@@ -116,6 +116,26 @@ class ItemsDroppedOff(models.Model):
 
     def __str__(self):
         return f"{self.order_item.pk} has been dropped off {self.order_item.user.username}'s location by driver"
+
+    def get_item_name(self):
+        return self.order_item.cart.item.name
+
+    def get_item_size(self):
+        return self.order_item.cart.item.size
+
+    def get_item_pic(self):
+        if self.order_item.cart.item.picture:
+            return "https://f-bazaar.com" + self.order_item.cart.item.picture.url
+        return ''
+
+    def get_ordered_username(self):
+        return self.order_item.user.username
+
+    def get_order_quantity(self):
+        return self.order_item.quantity
+
+    def get_order_status(self):
+        return self.order_item.order_status
     
 
 class QualifiedForBonuses(models.Model):

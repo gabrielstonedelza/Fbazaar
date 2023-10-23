@@ -11,6 +11,14 @@ from .sendemail import send_my_mail
 from cart.models import Cart
 from cart.serializers import CartSerializer
 
+# get driver's deliveries
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_my_delivered_order(request):
+    orders = OrderItem.objects.filter(user=request.user).order_by('-date_order_created')
+    serializer = OrderItemSerializer(orders, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET','POST'])
 @permission_classes([permissions.IsAuthenticated])

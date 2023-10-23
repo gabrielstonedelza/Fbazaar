@@ -16,7 +16,7 @@ from cart.serializers import CartSerializer
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_my_delivered_order(request):
-    delivered_orders = ItemsDroppedOff.objects.filter(user=request.user).order_by('-date_order_created')
+    delivered_orders = ItemsDroppedOff.objects.filter(user=request.user).order_by('-date_created')
     serializer = ItemsDroppedOffSerializer(delivered_orders, many=True)
     return Response(serializer.data)
 

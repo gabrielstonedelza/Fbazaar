@@ -17,4 +17,12 @@ urlpatterns =[
     path("add_to_dropped_off_orders/",views.add_dropped_off_orders),
     path("order/<int:id>/update/",views.update_order),
     path("order/<int:id>/delete/",views.delete_order),
+
+#
+    path("get_all_my_pending_orders/",views.get_all_my_pending_orders),
+    path("get_all_my_processing_orders/",views.get_all_my_processing_orders),
+    path("get_all_my_picked_up_orders/",views.get_all_my_picked_up_orders),
+    path("get_all_my_delivered_orders/",views.get_all_my_delivered_orders),
+
+
 ]

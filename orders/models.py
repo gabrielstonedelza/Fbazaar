@@ -35,7 +35,6 @@ ORDER_STATUS = (
     ("Pending","Pending"),
     ("Processing","Processing"),
     ("Picked Up","Picked Up"),
-    ("In Transit","In Transit"),
     ("Delivered","Delivered"),
 )
 

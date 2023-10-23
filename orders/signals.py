@@ -65,7 +65,7 @@ def alert_order_picked_up(sender, created, instance, **kwargs):
 @receiver(post_save, sender=ItemsDroppedOff)
 def alert_order_dropped_off(sender, created, instance, **kwargs):
     title = f"Order Delivered"
-    message = f"{instance.order_item.pk} has been delivered to the customers location"
+    message = f"{instance.order_item.cart.item.name} has been delivered to the customers location"
     admin_user = User.objects.get(id=1)
     user_ordering = User.objects.get(username=instance.order_item.user.username)
 

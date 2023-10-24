@@ -35,6 +35,7 @@ ORDER_STATUS = (
     ("Pending","Pending"),
     ("Processing","Processing"),
     ("Picked Up","Picked Up"),
+    ("In Transit","In Transit"),
     ("Delivered","Delivered"),
 )
 
@@ -135,6 +136,16 @@ class ItemsPickedUp(models.Model):
     def get_username(self):
         return self.user.username
 
+class ItemsInTransit(models.Model):
+    order_item = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
+    driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="driver_sending_order")
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.order_item.pk} has been picked up by driver"
+
+    def get_username(self):
+        return self.user.username
 
 
 class ItemsDroppedOff(models.Model):
@@ -174,3 +185,22 @@ class QualifiedForBonuses(models.Model):
 
     def __str__(self):
         return f"{self.user.username} has qualified for bonus"
+
+
+class DriversCurrentLocation(models.Model):
+    order_item = models.ForeignKey(OrderItem, on_delete=models.CASCADE, related_name="ordered_item")
+    driver = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_receiving_order")
+    drivers_lat = models.CharField(max_length=255)
+    drivers_lng = models.CharField(max_length=255)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.order_item.cart.item.name
+
+    def get_drivers_name(self):
+        return self.driver.username
+
+    def get_order_user(self):
+        return self.user.username

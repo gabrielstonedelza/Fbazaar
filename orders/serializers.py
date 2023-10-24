@@ -1,5 +1,16 @@
 from rest_framework import serializers
-from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,QualifiedForBonuses,AssignDriverToOrder
+from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,QualifiedForBonuses,AssignDriverToOrder,DriversCurrentLocation,ItemsInTransit
+
+class ItemsInTransitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemsInTransit
+        fields = ['id','order_item','driver','date_created']
+        read_only_fields = ['driver']
+class DriversCurrentLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DriversCurrentLocation
+        fields = ['id','order_item','driver','user','drivers_lat','drivers_lng','date_created','get_drivers_name','get_order_user']
+        read_only_fields = ['driver']
 
 class AssignDriverToOrderSerializer(serializers.ModelSerializer):
     class Meta:

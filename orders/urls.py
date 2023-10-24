@@ -23,6 +23,10 @@ urlpatterns =[
     path("get_all_my_processing_orders/",views.get_all_my_processing_orders),
     path("get_all_my_picked_up_orders/",views.get_all_my_picked_up_orders),
     path("get_all_my_delivered_orders/",views.get_all_my_delivered_orders),
+#
+
+    path("assign_driver_to_order/<int:id>/",views.assign_driver_to_order),
+    path("get_all_my_assigned_orders/",views.get_all_my_assigned_orders),
 
 
 ]

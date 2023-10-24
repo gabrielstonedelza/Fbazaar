@@ -85,8 +85,6 @@ class OrderItem(models.Model):
         return self.cart.price
 
 
-
-
 class ClearedPickUps(models.Model):
     order_item = models.ForeignKey(OrderItem,on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -94,6 +92,35 @@ class ClearedPickUps(models.Model):
     def __str__(self):
         return f"{self.order_item.pk} has been cleared for pickup"
 
+class AssignDriverToOrder(models.Model):
+    order_item = models.ForeignKey(OrderItem, on_delete=models.CASCADE)
+    driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="assigned_driver")
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.driver.username} has been assigned to order {self.order_item.cart.item.name}"
+
+    def get_item_name(self):
+        return self.order_item.cart.item.name
+
+    def get_item_size(self):
+        return self.order_item.cart.item.size
+
+    def get_item_pic(self):
+        if self.order_item.cart.item.picture:
+            return "https://f-bazaar.com" + self.order_item.cart.item.picture.url
+        return ''
+
+    def get_ordered_username(self):
+        return self.order_item.user.username
+
+    def get_order_quantity(self):
+        return self.order_item.quantity
+
+    def get_order_status(self):
+        return self.order_item.order_status
+    def get_item_price(self):
+        return self.order_item.price
 
 class ItemsPickedUp(models.Model):
     order_item = models.ForeignKey(OrderItem,on_delete=models.CASCADE)

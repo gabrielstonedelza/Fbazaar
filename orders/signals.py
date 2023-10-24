@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,QualifiedForBonuses
+from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,QualifiedForBonuses,AssignDriverToOrder
 from users.models import User
 from notifications.models import Notifications
 from .sendemail import send_my_mail
@@ -8,6 +8,19 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from store_api.models import StoreItem
 from cart.models import Cart
+
+
+@receiver(post_save,sender=AssignDriverToOrder)
+def alert_driver_assigned_to_order(sender, created, instance, **kwargs):
+    title = f"New Assigned Order"
+    message = f"Hi {instance.driver.username},you have been assigned to order {instance.order_item.cart.item.name}"
+    admin_user = User.objects.get(id=1)
+
+    if created:
+        Notifications.objects.create(item_id=instance.id,
+                                     notification_title=title, notification_message=message,
+                                     notification_from=admin_user, notification_to=instance.driver,
+                                     )
 
 
 @receiver(post_save, sender=OrderItem)

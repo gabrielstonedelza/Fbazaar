@@ -1,5 +1,5 @@
-from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff
-from .serializers import OrderItemSerializer,ClearedPickUpsSerializer,ItemsPickedUpSerializer,ItemsDroppedOffSerializer
+from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,AssignDriverToOrder
+from .serializers import OrderItemSerializer,ClearedPickUpsSerializer,ItemsPickedUpSerializer,ItemsDroppedOffSerializer,AssignDriverToOrderSerializer
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from rest_framework.decorators import api_view, permission_classes
@@ -78,8 +78,6 @@ def get_cleared_for_pickup(request):
     return (Response(serializer.data)
 
 @api_view(['GET']))
-
-
 @permission_classes([permissions.IsAuthenticated])
 def get_orders_picked_up(request):
     orders = OrderItem.objects.filter(order_picked_up_status="Items Picked").order_by('-date_order_created')
@@ -176,4 +174,22 @@ def get_all_my_picked_up_orders(request):
 def get_all_my_delivered_orders(request):
     orders = OrderItem.objects.filter(user=request.user).filter(order_status="Delivered").order_by('-date_order_created')
     serializer = OrderItemSerializer(orders, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET','POST'])
+@permission_classes([permissions.AllowAny])
+def assign_driver_to_order(request,id):
+    order = get_object_or_404(OrderItem, id=id)
+    serializer = AssignDriverToOrderSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(order_item=order)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_my_assigned_orders(request):
+    orders = AssignDriverToOrder.objects.filter(driver=request.user).order_by('-date_created')
+    serializer = AssignDriverToOrderSerializer(orders, many=True)
     return Response(serializer.data)

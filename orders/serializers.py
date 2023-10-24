@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,QualifiedForBonuses
+from .models import OrderItem, ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,QualifiedForBonuses,AssignDriverToOrder
+
+class AssignDriverToOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssignDriverToOrder
+        fields = ['id','order_item','driver','date_created','get_item_name','get_item_size','get_item_pic','get_ordered_username','get_order_quantity','get_order_status','get_item_price']
+        read_only_fields = ['order_item']
 
 
 class OrderItemSerializer(serializers.ModelSerializer):

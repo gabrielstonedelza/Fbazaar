@@ -150,6 +150,13 @@ def get_all_piked_up_orders(request):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
+def get_all_in_transit_orders(request):
+    orders = OrderItem.objects.filter(order_status="In Transit").filter(assigned_driver=request.user).order_by('-date_order_created')
+    serializer = OrderItemSerializer(orders, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def get_all_delivered_orders(request):
     orders = OrderItem.objects.filter(order_status="Delivered").order_by('-date_order_created')
     serializer = OrderItemSerializer(orders, many=True)

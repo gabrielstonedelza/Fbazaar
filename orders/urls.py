@@ -28,6 +28,5 @@ urlpatterns =[
 
     path("assign_driver_to_order/<int:id>/",views.assign_driver_to_order),
     path("get_all_my_assigned_orders/",views.get_all_my_assigned_orders),
-
-
+    path("get_all_drivers_assigned_orders/",views.get_all_drivers_assigned_orders),
 ]

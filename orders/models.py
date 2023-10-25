@@ -47,6 +47,7 @@ DELIVERY_METHOD = (
 class OrderItem(models.Model):
     cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_purchasing")
+    assigned_driver = models.ForeignKey(User,on_delete=models.CASCADE,related_name="driver_assigned_to_deliver_order",null=True)
     quantity = models.IntegerField(default=0)
     category = models.CharField(max_length=80, default="Water", choices=ITEM_CATEGORIES)
     size = models.CharField(max_length=30, choices=ITEM_SIZE, default="Small")
@@ -84,6 +85,9 @@ class OrderItem(models.Model):
 
     def get_item_price(self):
         return self.cart.price
+
+    def get_assigned_driver_name(self):
+        return self.assigned_driver.username
 
 
 class ClearedPickUps(models.Model):

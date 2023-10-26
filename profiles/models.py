@@ -11,6 +11,9 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+    def get_user_type(self):
+        return self.user.user_type
+
     def get_phone(self):
         return self.user.phone
 

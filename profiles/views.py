@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .serializers import ProfileSerializer
 from .models import Profile
+from users.models import User
 from django.shortcuts import  render, get_object_or_404
 
 

@@ -155,6 +155,14 @@ def get_all_in_transit_orders(request):
     serializer = OrderItemSerializer(orders, many=True)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_customers_order_in_transit(request):
+    orders = OrderItem.objects.filter(order_status="In Transit").filter(user=request.user).order_by('-date_order_created')
+    serializer = OrderItemSerializer(orders, many=True)
+    return Response(serializer.data)
+
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_delivered_orders(request):

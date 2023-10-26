@@ -22,7 +22,7 @@ class AssignDriverToOrderSerializer(serializers.ModelSerializer):
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ['id','cart','user','quantity','category','size','price','payment_method','drop_off_location_lat','drop_off_location_lng','date_order_created','order_status','ordered','get_item_name','get_username','get_item_pic','unique_order_code','delivery_method','get_item_size','get_item_price','assigned_driver','get_assigned_driver_name']
+        fields = ['id','cart','user','quantity','category','size','price','payment_method','drop_off_location_lat','drop_off_location_lng','date_order_created','order_status','ordered','get_item_name','get_username','get_item_pic','unique_order_code','delivery_method','get_item_size','get_item_price','assigned_driver','get_assigned_driver_name','delivered']
         read_only_fields = ['user','cart']
 
 

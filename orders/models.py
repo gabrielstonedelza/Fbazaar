@@ -58,6 +58,7 @@ class OrderItem(models.Model):
     date_order_created = models.DateTimeField(auto_now_add=True)
     order_status = models.CharField(max_length=70,choices=ORDER_STATUS,default="Pending")
     delivery_method = models.CharField(max_length=50,default="Delivery")
+    delivered = models.BooleanField(default=False)
     ordered = models.BooleanField(default=False)
     unique_order_code = models.CharField(max_length=255,default="")
 

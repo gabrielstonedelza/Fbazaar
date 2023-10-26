@@ -236,6 +236,6 @@ def get_all_my_assigned_orders(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_drivers_assigned_orders(request):
-    orders = OrderItem.objects.filter(assigned_driver=request.user).filter(order_status="Picked Up").order_by('-date_order_created')
+    orders = OrderItem.objects.filter(assigned_driver=request.user).filter(delivered=False).order_by('-date_order_created')
     serializer = OrderItemSerializer(orders, many=True)
     return Response(serializer.data)

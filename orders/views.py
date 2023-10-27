@@ -120,7 +120,7 @@ def add_order_to_in_transit(request):
 def add_dropped_off_orders(request):
     serializer = ItemsDroppedOffSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

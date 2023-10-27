@@ -256,7 +256,7 @@ def add_drivers_current_location(request,id):
     order = get_object_or_404(OrderItem, id=id)
     serializer = DriversCurrentLocationSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(driver=request.user,order=order)
+        serializer.save(driver=request.user,order_item=order)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

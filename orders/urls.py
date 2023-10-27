@@ -34,5 +34,5 @@ urlpatterns =[
 
 #
     path("add_drivers_current_location/<int:id>/",views.add_drivers_current_location),
-    path("get_drivers_current_location/",views.get_drivers_current_location),
+    path("get_drivers_current_location/<int:id>/",views.get_drivers_current_location),
 ]

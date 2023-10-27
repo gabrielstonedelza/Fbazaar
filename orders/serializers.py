@@ -10,7 +10,7 @@ class DriversCurrentLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = DriversCurrentLocation
         fields = ['id','order_item','driver','user','drivers_lat','drivers_lng','date_created','get_drivers_name','get_order_user']
-        read_only_fields = ['driver']
+        read_only_fields = ['driver','order_item']
 
 class AssignDriverToOrderSerializer(serializers.ModelSerializer):
     class Meta:

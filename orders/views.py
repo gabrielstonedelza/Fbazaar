@@ -247,3 +247,24 @@ def get_all_drivers_assigned_orders(request):
     orders = OrderItem.objects.filter(assigned_driver=request.user).filter(delivered=False).order_by('-date_order_created')
     serializer = OrderItemSerializer(orders, many=True)
     return Response(serializer.data)
+
+
+
+@api_view(['GET','POST'])
+@permission_classes([permissions.IsAuthenticated])
+def add_drivers_current_location(request,id):
+    order = get_object_or_404(OrderItem, id=id)
+    serializer = DriversCurrentLocationSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(driver=request.user,order=order)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_drivers_current_location(request,id):
+    order = get_object_or_404(OrderItem, id=id)
+    current_location = DriversCurrentLocation.objects.filter(user=request.user).filter(order_item=order).order_by('-date_created')
+    serializer = ItemsDroppedOffSerializer(current_location, many=True)
+    return Response(serializer.data)

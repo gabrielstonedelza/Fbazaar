@@ -266,5 +266,5 @@ def add_drivers_current_location(request,id):
 def get_drivers_current_location(request,id):
     order = get_object_or_404(OrderItem, id=id)
     current_location = DriversCurrentLocation.objects.filter(user=request.user).filter(order_item=order).order_by('-date_created')[:1]
-    serializer = ItemsDroppedOffSerializer(current_location, many=True)
+    serializer = DriversCurrentLocationSerializer(current_location, many=True)
     return Response(serializer.data)

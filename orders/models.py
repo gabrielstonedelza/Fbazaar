@@ -62,6 +62,9 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default=False)
     unique_order_code = models.CharField(max_length=255,default="")
 
+    def get_user_phone_number(self):
+        return self.user.phone
+
     def save(self, *args, **kwargs):
         total_price = float(self.price) * float(self.quantity)
         self.price = total_price

@@ -33,6 +33,6 @@ urlpatterns =[
     path("get_all_drivers_assigned_orders/",views.get_all_drivers_assigned_orders),
 
 #
-    path("add_drivers_current_location/",views.add_drivers_current_location),
+    path("add_drivers_current_location/<int:id>/",views.add_drivers_current_location),
     path("get_drivers_current_location/",views.get_drivers_current_location),
 ]

@@ -24,7 +24,7 @@ def alert_new_item(sender, created, instance, **kwargs):
 @receiver(post_save, sender=AddToPriceChanged)
 def alert_item_price_update(sender, created, instance, **kwargs):
     title = f"Item Updated"
-    message = f"Hi,{instance.user.username}, FBazaar updated the price of {instance.item.name},login and check it out"
+    message = f"Hi,{instance.user.username}, FBazaar updated the price of {instance.ordered_item.name},login and check it out"
     admin_user = User.objects.get(id=1)
     users = User.objects.exclude(id=1)
 

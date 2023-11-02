@@ -9,6 +9,7 @@ USER_TYPES = (
     ("Customer", "Customer"),
     ("Driver", "Driver"),
     ("Warehouse Manager", "Warehouse Manager"),
+    ("Stock Manager", "Stock Manager"),
 )
 
 class User(AbstractUser):

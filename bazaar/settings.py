@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'chat.apps.ChatConfig',
     'orders.apps.OrdersConfig',
+    'order.apps.OrderConfig',
     'cart.apps.CartConfig',
     'favorites.apps.FavoritesConfig',
     'djoser',

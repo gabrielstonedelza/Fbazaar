@@ -19,7 +19,7 @@ from store_api.models import StoreItem
 
 @api_view(['GET','POST'])
 @permission_classes([permissions.IsAuthenticated])
-def add_item_to_cart(request,id):
+def add_to_cart(request,id):
     item = get_object_or_404(StoreItem, id=id)
     serializer = CartSerializer(data=request.data)
     if serializer.is_valid():

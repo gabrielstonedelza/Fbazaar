@@ -49,7 +49,7 @@ def get_my_delivered_order(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_my_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).order_by('-date_order_created')
+    orders = OrderItem.objects.filter(user=request.user).order_by('-date_ordered')
     serializer = OrderItemSerializer(orders, many=True)
     return Response(serializer.data)
 
@@ -57,9 +57,9 @@ def get_my_orders(request):
 @permission_classes([permissions.IsAuthenticated])
 def update_order(request, id):
     order = get_object_or_404(OrderItem, id=id)
-    serializer = OrderItemSerializer(order, data=request.data)
+    serializer = OrderSerializer(order, data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -67,7 +67,7 @@ def update_order(request, id):
 @permission_classes([permissions.IsAuthenticated])
 def delete_order(request, id):
     try:
-        order = get_object_or_404(OrderItem, id=id)
+        order = get_object_or_404(Order, id=id)
         order.delete()
     except OrderItem.DoesNotExist:
         return Http404
@@ -88,22 +88,22 @@ def add_to_cleared(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_cleared_for_pickup(request):
-    orders = OrderItem.objects.filter(order_pick_up_status="Cleared for pickup").order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(order_pick_up_status="Cleared for pickup").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return (Response(serializer.data)
 
 @api_view(['GET']))
 @permission_classes([permissions.IsAuthenticated])
 def get_orders_picked_up(request):
-    orders = OrderItem.objects.filter(order_picked_up_status="Items Picked").order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(order_picked_up_status="Items Picked").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 
 @permission_classes([permissions.IsAuthenticated])
 def get_orders_dropped_off(request):
-    orders = OrderItem.objects.filter(item_dropped_off=True).order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(item_dropped_off=True).order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 
@@ -144,45 +144,45 @@ def add_dropped_off_orders(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_pending_orders(request):
-    orders = OrderItem.objects.filter(order_status="Pending").order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(order_status="Pending").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_processing_orders(request):
-    orders = OrderItem.objects.filter(order_status="Processing").order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(order_status="Processing").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_piked_up_orders(request):
-    orders = OrderItem.objects.filter(order_status="Picked Up").order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(order_status="Picked Up").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_in_transit_orders(request):
-    orders = OrderItem.objects.filter(order_status="In Transit").filter(assigned_driver=request.user).order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(order_status="In Transit").filter(assigned_driver=request.user).order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_customers_order_in_transit(request):
-    orders = OrderItem.objects.filter(order_status="In Transit").filter(user=request.user).order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(order_status="In Transit").filter(user=request.user).order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_delivered_orders(request):
-    orders = OrderItem.objects.filter(order_status="Delivered").order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(order_status="Delivered").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 # send_my_mail(f"Hi from ConnectDjango", settings.EMAIL_HOST_USER, i.email, {"name": i.username},
 #                          "email_templates/success.html")
@@ -192,28 +192,28 @@ def get_all_delivered_orders(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_pending_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Pending").order_by('-date_order_created')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(user=request.user).filter(order_status="Pending").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_processing_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Processing").order_by('-date_order_created')
+    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Processing").order_by('-date_ordered')
     serializer = OrderItemSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_picked_up_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Picked Up").order_by('-date_order_created')
+    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Picked Up").order_by('-date_ordered')
     serializer = OrderItemSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_delivered_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Delivered").order_by('-date_order_created')
+    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Delivered").order_by('-date_ordered')
     serializer = OrderItemSerializer(orders, many=True)
     return Response(serializer.data)
 
@@ -259,7 +259,7 @@ def get_all_my_assigned_orders(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_drivers_assigned_orders(request):
-    orders = OrderItem.objects.filter(assigned_driver=request.user).filter(delivered=False).order_by('-date_order_created')
+    orders = OrderItem.objects.filter(assigned_driver=request.user).filter(delivered=False).order_by('-date_ordered')
     serializer = OrderItemSerializer(orders, many=True)
     return Response(serializer.data)
 

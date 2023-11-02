@@ -58,3 +58,31 @@ def check_out_order_items(request):
         i.save()
     serializer = OrderItemSerializer(cart_items, many=True)
     return Response(serializer.data)
+
+@api_view(['GET','POST'])
+@permission_classes([permissions.IsAuthenticated])
+def remove_item_from_cart(request,id,order_item_id):
+    item = get_object_or_404(StoreItem, id=id)
+    de_user = get_object_or_404(Order,user=request.user)
+    serializer = OrderSerializer(data=request.data)
+    # order_item = get_object_or_404(OrderItem, item=item)
+    if serializer.is_valid():
+        # checking if order item is already in cart
+        if Order.objects.filter(user=request.user).filter(ordered=False).exists() and de_user.items.filter(item__id=item.id).exists():
+            order_item = get_object_or_404(OrderItem, item=item)
+            de_user.items.remove(order_item)
+            order_item.delete()
+        if OrderItem.objects.filter(item=item).filter(user=request.user).filter(ordered=False).exists():
+            order_item = get_object_or_404(OrderItem, id=order_item_id)
+            order_item.delete()
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def clear_order_items(request):
+    cart_items = OrderItem.objects.filter(user=request.user).filter(ordered=False).order_by('-date_ordered')
+    for i in cart_items:
+        i.delete()
+    serializer = OrderItemSerializer(cart_items, many=True)
+    return Response(serializer.data)

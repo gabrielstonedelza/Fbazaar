@@ -47,7 +47,7 @@ class Order(models.Model):
     delivered = models.BooleanField(default=False)
     ordered = models.BooleanField(default=False)
     date_ordered = models.DateTimeField(auto_now_add=True)
-    unique_order_code = models.CharField(max_length=255, default="")
+    unique_order_code = models.CharField(max_length=255, default="",blank=True)
 
     def __str__(self):
         return self.user.username

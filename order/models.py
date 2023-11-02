@@ -20,6 +20,7 @@ PICKED_UP_STATUS=(
 )
 
 ORDER_STATUS = (
+    ("Not Processed","Not Processed"),
     ("Pending","Pending"),
     ("Processing","Processing"),
     ("Picked Up","Picked Up"),
@@ -42,7 +43,7 @@ class Order(models.Model):
     drop_off_location_lat = models.CharField(max_length=255, blank=True)
     drop_off_location_lng = models.CharField(max_length=255, blank=True)
     date_order_created = models.DateTimeField(auto_now_add=True)
-    order_status = models.CharField(max_length=70, choices=ORDER_STATUS, default="Pending")
+    order_status = models.CharField(max_length=70, choices=ORDER_STATUS, default="Not Processed")
     delivery_method = models.CharField(max_length=50, default="Delivery")
     delivered = models.BooleanField(default=False)
     ordered = models.BooleanField(default=False)

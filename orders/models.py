@@ -78,5 +78,5 @@ class OrderItem(models.Model):
         return self.item.size
 
     def get_item_price(self):
-        return self.item.new_price
+        return self.item.old_price
 

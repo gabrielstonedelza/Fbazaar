@@ -37,7 +37,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     assigned_driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="driver_assigned_to_deliver_order",
                                         default=1)
-    items = models.ManyToManyField(OrderItem,related_name="orders", null=True, blank=True)
+    items = models.ManyToManyField(OrderItem,related_name="orders", blank=True)
     payment_method = models.CharField(max_length=80, default="Cash On Delivery", choices=PAYMENT_METHODS)
     drop_off_location_lat = models.CharField(max_length=255, blank=True)
     drop_off_location_lng = models.CharField(max_length=255, blank=True)

@@ -38,10 +38,10 @@ def get_ordered_items(request):
     serializer = OrderSerializer(cart_items, many=True)
     return Response(serializer.data)
 
-
-@api_view(['GET'])
+@api_view(['GET','PUT'])
 @permission_classes([permissions.IsAuthenticated])
-def check_out_items(request):
+def check_out_items(request,id):
+    my_order = get_object_or_404(Order,id=id)
     order_items = OrderItem.objects.filter(user=request.user).filter(ordered=False)
     for item in order_items:
         item.ordered = True
@@ -50,10 +50,13 @@ def check_out_items(request):
     for i in cart_items:
         i.ordered = True
         i.save()
-
-
-    serializer = OrderSerializer(cart_items, many=True)
-    return Response(serializer.data)
+    serializer = OrderSerializer(my_order,data=request.data)
+    if serializer.is_valid():
+        cart_item.quantity += 1
+        cart_item.save()
+        serializer.save(user=request.user)
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 #
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])

@@ -42,10 +42,16 @@ def get_ordered_items(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def check_out_items(request):
+    order_items = OrderItem.objects.filter(user=request.user).filter(ordered=False)
+    for item in order_items:
+        item.ordered = True
+        item.save()
     cart_items = Order.objects.filter(user=request.user).filter(ordered=False).order_by('-date_ordered')
     for i in cart_items:
         i.ordered = True
         i.save()
+
+
     serializer = OrderSerializer(cart_items, many=True)
     return Response(serializer.data)
 #

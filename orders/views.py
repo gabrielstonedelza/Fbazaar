@@ -34,6 +34,31 @@ def add_item_to_cart(request,id):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET','PUT'])
+@permission_classes([permissions.IsAuthenticated])
+def increase_item_quantity(request,id,item_id):
+    item = get_object_or_404(StoreItem, id=item_id)
+    cart_item = get_object_or_404(OrderItem, id=id)
+    serializer = OrderItemSerializer(data=request.data)
+    if serializer.is_valid():
+        cart_item.quantity += 1
+        cart_item.save(user=request.user,item=item)
+        # serializer.save(user=request.user, food=food)
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET','PUT'])
+@permission_classes([permissions.IsAuthenticated])
+def decrease_item_quantity(request,id,item_id):
+    item = get_object_or_404(StoreItem, id=item_id)
+    cart_item = get_object_or_404(OrderItem, id=id)
+    serializer = OrderItemSerializer(data=request.data)
+    if serializer.is_valid():
+        cart_item.quantity -= 1
+        cart_item.save(user=request.user,item=item)
+        # serializer.save(user=request.user, food=food)
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])

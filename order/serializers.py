@@ -6,7 +6,6 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id','user','assigned_driver','items','payment_method','drop_off_location_lat','drop_off_location_lng','date_order_created','order_status','delivery_method','delivered','ordered','date_ordered','unique_order_code','get_items']
-        read_only_fields = ['user']
 
 
 class ItemsInTransitSerializer(serializers.ModelSerializer):

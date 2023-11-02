@@ -53,7 +53,7 @@ class OrderItem(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True)
 
     def get_item_total_price(self):
-        return self.quantity * self.item.new_price
+        return self.quantity * self.item.old_price
 
     # def save(self, *args, **kwargs):
     #     total_price = float(self.price) * float(self.quantity)

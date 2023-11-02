@@ -18,7 +18,7 @@ from .serializers import OrderSerializer
 def check_out(request):
     serializer = OrderSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

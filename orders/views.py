@@ -42,7 +42,7 @@ def increase_item_quantity(request,id,item_id):
     serializer = OrderItemSerializer(data=request.data)
     if serializer.is_valid():
         cart_item.quantity += 1
-        cart_item.save(user=request.user,item=item)
+        cart_item.save()
         # serializer.save(user=request.user, food=food)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -55,7 +55,7 @@ def decrease_item_quantity(request,id,item_id):
     serializer = OrderItemSerializer(data=request.data)
     if serializer.is_valid():
         cart_item.quantity -= 1
-        cart_item.save(user=request.user,item=item)
+        cart_item.save()
         # serializer.save(user=request.user, food=food)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

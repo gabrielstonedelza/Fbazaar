@@ -13,14 +13,14 @@ from orders.models import OrderItem
 from .serializers import OrderSerializer
 
 
-@api_view(['GET', 'PUT'])
-@permission_classes([permissions.IsAuthenticated])
-def check_out(request):
-    serializer = OrderSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save(user=request.user)
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# @api_view(['GET', 'PUT'])
+# @permission_classes([permissions.IsAuthenticated])
+# def check_out(request):
+#     serializer = OrderSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save(user=request.user)
+#         return Response(serializer.data)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])

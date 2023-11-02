@@ -36,8 +36,7 @@ def add_item_to_cart(request,id):
 
 @api_view(['GET','PUT'])
 @permission_classes([permissions.IsAuthenticated])
-def increase_item_quantity(request,id,item_id):
-    item = get_object_or_404(StoreItem, id=item_id)
+def increase_item_quantity(request,id):
     cart_item = get_object_or_404(OrderItem, id=id)
     serializer = OrderItemSerializer(data=request.data)
     if serializer.is_valid():
@@ -49,8 +48,7 @@ def increase_item_quantity(request,id,item_id):
 
 @api_view(['GET','PUT'])
 @permission_classes([permissions.IsAuthenticated])
-def decrease_item_quantity(request,id,item_id):
-    item = get_object_or_404(StoreItem, id=item_id)
+def decrease_item_quantity(request,id):
     cart_item = get_object_or_404(OrderItem, id=id)
     serializer = OrderItemSerializer(data=request.data)
     if serializer.is_valid():

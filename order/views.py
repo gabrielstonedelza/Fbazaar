@@ -199,22 +199,22 @@ def get_all_my_pending_orders(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_processing_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Processing").order_by('-date_ordered')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(user=request.user).filter(order_status="Processing").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_picked_up_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Picked Up").order_by('-date_ordered')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(user=request.user).filter(order_status="Picked Up").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_delivered_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).filter(order_status="Delivered").order_by('-date_ordered')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(user=request.user).filter(order_status="Delivered").order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 

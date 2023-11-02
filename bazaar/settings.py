@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'order.apps.OrderConfig',
     'cart.apps.CartConfig',
-    'favorites.apps.FavoritesConfig',
     'djoser',
     'corsheaders',
     'crispy_forms',

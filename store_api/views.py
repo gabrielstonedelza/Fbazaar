@@ -16,10 +16,17 @@ from rest_framework import filters
 def add_item(request):
     serializer = StoreItemSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_my_items(request):
+    items = StoreItem.objects.filter(user=request.user).order_by('-date_created')
+    serializer = StoreItemSerializer(items, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
@@ -42,7 +49,7 @@ def update_item(request, id):
     item = get_object_or_404(StoreItem, id=id)
     serializer = StoreItemSerializer(item, data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

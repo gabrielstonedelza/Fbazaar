@@ -5,7 +5,8 @@ from .models import StoreItem,AddToPriceChanged,ItemRatings,ItemRemarks
 class StoreItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = StoreItem
-        fields = ['id','name','category','size','old_price','new_price','retail_price','wholesale_price','picture','description','date_created','quantity_qualify_for_free_delivery','exclusive','promotion','quantity_needed_for_wholesale_price','get_item_pic','volume']
+        fields = ['id','user','company_name','name','category','size','old_price','new_price','retail_price','wholesale_price','picture','description','date_created','quantity_qualify_for_free_delivery','exclusive','promotion','quantity_needed_for_wholesale_price','get_item_pic','volume']
+        read_only_fields = ['user']
 
 class ItemRatingsSerializer(serializers.ModelSerializer):
     class Meta:

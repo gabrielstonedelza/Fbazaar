@@ -49,8 +49,8 @@ def get_my_delivered_order(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_my_orders(request):
-    orders = OrderItem.objects.filter(user=request.user).order_by('-date_ordered')
-    serializer = OrderItemSerializer(orders, many=True)
+    orders = Order.objects.filter(user=request.user).order_by('-date_ordered')
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(['GET', 'PUT'])

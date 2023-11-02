@@ -63,6 +63,9 @@ class OrderItem(models.Model):
     def __str__(self):
         return self.item.name
 
+    def get_store_name(self):
+        return self.item.company_name
+
     def get_item_name(self):
         return self.item.name
 

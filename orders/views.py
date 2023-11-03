@@ -33,13 +33,13 @@ def item_to_cart(request,id):
 # new checkout
 @api_view(['GET','POST'])
 @permission_classes([permissions.IsAuthenticated])
-def item_check_out(request):
+def item_check_out(request,pm,dm,drop_loc_lat,drop_off_lng,unique_code):
     items = OrderItem.objects.filter(user=request.user).filter(ordered=False)
     serializer = OrderSerializer(data=request.data)
 
     if serializer.is_valid():
         # checking if order item is already in cart
-        ordering_user = Order.objects.create(user=request.user,ordered=True)
+        ordering_user = Order.objects.create(user=request.user,ordered=True,payment_method=pm,drop_off_location_lat=drop_loc_lat,drop_off_location_lng=drop_off_lng,order_status="Pending",unique_order_code=unique_code,delivery_method=dm)
         for i in items:
             i.ordered = True
             i.save()

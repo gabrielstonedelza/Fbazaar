@@ -54,7 +54,7 @@ class Order(models.Model):
         return self.user.username
 
     def get_item_details(self):
-        my_items = [];
+        my_items = []
         my_dict = {"Name": [], "Size": [], "Picture": []}
         for i in self.items.all():
             if i.item.picture:

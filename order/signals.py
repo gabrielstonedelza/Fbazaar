@@ -47,7 +47,7 @@ def alert_order(sender, created, instance, **kwargs):
                                      notification_title=title, notification_message=message,
                                      notification_from=instance.user, notification_to=admin_user,
                                      )
-        send_my_mail(f"New Order", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER, {"item_name": instance.order.unique_order_code, "username":instance.user.username},
+        send_my_mail(f"New Order", settings.EMAIL_HOST_USER, settings.EMAIL_HOST_USER, {"item_name": instance.unique_order_code, "username":instance.user.username},
                      "email_templates/order_email.html")
 
 

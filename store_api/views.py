@@ -156,7 +156,7 @@ def get_all_item_remarks(request,id):
 
 class SearchForItem(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    queryset = StoreItem.objects.all().order_by("-date_created")
+    queryset = StoreItem.objects.filter(item_verified=True).order_by("-date_created")
     serializer_class = StoreItemSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'category']
@@ -166,7 +166,7 @@ class SearchForItem(generics.ListAPIView):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_exclusive_items(request):
-    items = StoreItem.objects.filter(exclusive=True).order_by('-date_created')
+    items = StoreItem.objects.filter(exclusive=True).filter(item_verified=True).order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
@@ -174,7 +174,7 @@ def get_exclusive_items(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_promotion_items(request):
-    items = StoreItem.objects.filter(promotion=True).order_by('-date_created')
+    items = StoreItem.objects.filter(promotion=True).filter(item_verified=True).order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
@@ -182,7 +182,7 @@ def get_promotion_items(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_other_items(request):
-    items = StoreItem.objects.filter(promotion=False).filter(exclusive=False).order_by('-date_created')
+    items = StoreItem.objects.filter(promotion=False).filter(item_verified=True).filter(exclusive=False).order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
@@ -190,14 +190,14 @@ def get_other_items(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_drinks(request):
-    items = StoreItem.objects.filter(category="Drinks").order_by('-date_created')
+    items = StoreItem.objects.filter(category="Drinks").filter(item_verified=True).order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_water(request):
-    items = StoreItem.objects.filter(category="Water").order_by('-date_created')
+    items = StoreItem.objects.filter(category="Water").filter(item_verified=True).order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 

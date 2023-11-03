@@ -58,7 +58,7 @@ class Order(models.Model):
         my_dict = {"Name": [], "Size": [], "Picture": []}
         for i in self.items.all():
             if i.item.picture:
-                my_items.append(i)
+                my_items.append(i.item)
                 item_pic = "https://f-bazaar.com" + i.item.picture.url
                 my_dict["Picture"].append(item_pic)
             my_dict["Name"].append(i.item.name)

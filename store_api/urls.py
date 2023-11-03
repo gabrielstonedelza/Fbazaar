@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
     path("add_item/",views.add_item),
     path("items/",views.get_all_items),
+    path("verified_items/",views.get_all_verified_items),
+    path("unverified_items/",views.get_all_unverified_items),
     path("my_items/",views.get_all_my_items),
     path("exclusive_items/",views.get_exclusive_items),
     path("promotion_items/",views.get_promotion_items),

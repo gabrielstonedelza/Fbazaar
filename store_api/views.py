@@ -28,10 +28,25 @@ def get_all_my_items(request):
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_items(request):
     items = StoreItem.objects.all().order_by('-date_created')
+    serializer = StoreItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_verified_items(request):
+    items = StoreItem.objects.filter(item_verified=True).order_by('-date_created')
+    serializer = StoreItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_unverified_items(request):
+    items = StoreItem.objects.filter(item_verified=False).order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
@@ -185,3 +200,4 @@ def get_water(request):
     items = StoreItem.objects.filter(category="Water").order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
+

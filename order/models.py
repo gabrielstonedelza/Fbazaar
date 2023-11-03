@@ -65,11 +65,6 @@ class Order(models.Model):
         # print(ordered_items)
         return my_dict
 
-    def get_items(self):
-        return self.items.all()
-
-
-
 class ClearedPickUps(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)

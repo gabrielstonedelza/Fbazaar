@@ -54,18 +54,21 @@ class Order(models.Model):
         return self.user.username
 
     def get_item_details(self):
-        my_items = []
+        # my_items = []
         my_dict = {"Name": [], "Size": [], "Picture": []}
         for i in self.items.all():
             if i.item.picture:
-                my_items.append(i.item)
+                # my_items.append(i.item)
                 item_pic = "https://f-bazaar.com" + i.item.picture.url
                 my_dict["Picture"].append(item_pic)
             my_dict["Name"].append(i.item.name)
             my_dict["Size"].append(i.item.size)
 
         # print(ordered_items)
-        return my_dict,my_items
+        return my_dict
+
+    def get_items(self):
+        return self.items.all()
 
 
 

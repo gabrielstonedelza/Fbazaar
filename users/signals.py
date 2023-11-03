@@ -10,4 +10,3 @@ User = settings.AUTH_USER_MODEL
 def create_profile(sender, created, instance, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-        Order.objects.create(user=instance)

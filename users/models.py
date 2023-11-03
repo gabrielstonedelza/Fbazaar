@@ -19,7 +19,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=100, unique=True)
     company_name = models.CharField(max_length=100, unique=True,blank=True,default="")
     user_blocked = models.BooleanField(default=False)
-    agreed_to_supplied = models.BooleanField(default=False)
+
 
     REQUIRED_FIELDS = ['username', 'phone','user_type','name','company_name']
     USERNAME_FIELD = 'email'

@@ -4,6 +4,7 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from .serializers import UsersSerializer
 from .models import User
+from .process_mail import send_my_mail
 
 # Create your views here.
 def home(request):

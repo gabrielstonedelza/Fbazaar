@@ -55,3 +55,10 @@ def get_admin(request):
     admin_user = User.objects.filter(user_type="Administrator")
     serializer = UsersSerializer(admin_user, many=True)
     return Response(serializer.data)
+
+# send registration otp
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def send_otp(request,otp,email,username):
+    send_my_mail(f"Hello from FBazaar", settings.EMAIL_HOST_USER, email, {"name": username,"OTP": otp},"email_templates/sendotp.html")
+    return Response()

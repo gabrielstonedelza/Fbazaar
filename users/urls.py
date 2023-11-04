@@ -8,6 +8,7 @@ urlpatterns = [
     path("users/",views.get_users),
     path("customers/",views.get_all_customers),
     path("drivers/",views.get_all_drivers),
+    path("send_otp/<str:otp>/<str:email>/<str:username>/",views.send_otp),
     path("get_admin/",views.get_admin),
     path("managers/",views.get_all_wholesale_managers),
     path("user/<int:id>/update/",views.update_user),

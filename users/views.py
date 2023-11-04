@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .serializers import UsersSerializer
 from .models import User
 from .process_mail import send_my_mail
+from django.conf import settings
 
 # Create your views here.
 def home(request):

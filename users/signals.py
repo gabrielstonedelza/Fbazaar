@@ -2,7 +2,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from profiles.models import Profile
 from django.conf import settings
-from order.models import Order
 User = settings.AUTH_USER_MODEL
 
 

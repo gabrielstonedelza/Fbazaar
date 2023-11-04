@@ -9,7 +9,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to="profile_pics", default="default_user.png")
 
     def __str__(self):
-        return self.user.username
+        return self.user.name
 
     def get_user_type(self):
         return self.user.user_type

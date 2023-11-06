@@ -18,8 +18,8 @@ ITEM_SIZE =(
 class StoreItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
     company_name = models.CharField(max_length=100,default="FBazaar")
-    name = models.CharField(max_length=255)
-    category = models.CharField(max_length=80, default="Water",choices=ITEM_CATEGORIES)
+    name = models.CharField(max_length=255,blank=True)
+    category = models.CharField(max_length=80, default="Water",choices=ITEM_CATEGORIES,blank=True)
     size = models.CharField(max_length=30, choices=ITEM_SIZE, default="Small",blank=True)
     old_price = models.DecimalField(max_digits=19, decimal_places=2, blank=True,default=0.0)
     new_price = models.DecimalField(max_digits=19, decimal_places=2, blank=True,default=0.0)

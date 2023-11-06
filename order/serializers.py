@@ -23,7 +23,7 @@ class DriversCurrentLocationSerializer(serializers.ModelSerializer):
 class AssignDriverToOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = AssignDriverToOrder
-        fields = ['id','order','driver','date_created','get_item_name','get_item_size','get_item_pic','get_ordered_username','get_order_quantity','get_order_status','get_item_price']
+        fields = ['id','order','driver','date_created','get_item_code','get_ordered_username',]
         read_only_fields = ['order']
 
 class ClearedPickUpsSerializer(serializers.ModelSerializer):

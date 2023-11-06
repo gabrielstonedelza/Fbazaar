@@ -79,28 +79,12 @@ class AssignDriverToOrder(models.Model):
     def __str__(self):
         return f"{self.driver.username} has been assigned to order {self.order.items.name}"
 
-    def get_item_name(self):
-        return self.order.items.name
+    def get_item_code(self):
+        return self.order.unique_order_code
 
-    def get_item_size(self):
-        return self.order.items.size
-
-    def get_item_pic(self):
-        if self.order.items.picture:
-            return "https://f-bazaar.com" + self.order.items.picture.url
-        return ''
 
     def get_ordered_username(self):
         return self.order.user.username
-
-    def get_order_quantity(self):
-        return self.order.items.quantity
-
-    def get_order_status(self):
-        return self.order.order_status
-
-    def get_item_price(self):
-        return self.order.price
 
 
 class ItemsPickedUp(models.Model):

@@ -115,10 +115,19 @@ class PendingOrders(models.Model):
         return self.order.unique_order_code
 
     def get_items(self):
-        all_items = []
+        all_items_names = []
+        all_items_sizes = []
+        all_items_pictures = []
+        all_items_prices = []
+
         for i in self.order.items.all():
-            all_items.append(i.item.name)
-        return all_items
+            all_items_names.append(i.item.name)
+            all_items_sizes.append(i.item.size)
+            all_items_prices.append(i.item.old_price)
+            if i.item.picture:
+                item_pic = "https://f-bazaar.com" + i.item.picture.url
+                all_items_pictures.append(item_pic)
+        return all_items_names,all_items_sizes,all_items_pictures,all_items_prices
 
 class ProcessingOrders(models.Model):
     user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)

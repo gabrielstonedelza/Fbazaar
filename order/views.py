@@ -240,7 +240,7 @@ def get_all_my_delivered_orders(request):
 @api_view(['GET','POST'])
 @permission_classes([permissions.AllowAny])
 def assign_driver_to_order(request,id):
-    order = get_object_or_404(OrderItem, id=id)
+    order = get_object_or_404(Order, id=id)
     serializer = AssignDriverToOrderSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save(order=order)

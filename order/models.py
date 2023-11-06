@@ -43,6 +43,7 @@ class Order(models.Model):
     date_order_created = models.DateTimeField(auto_now_add=True)
     order_status = models.CharField(max_length=70, choices=ORDER_STATUS, default="Not Processed")
     delivery_method = models.CharField(max_length=50, default="Delivery")
+    order_total_price = models.DecimalField(max_digits=19, decimal_places=2, blank=True,default=0.0)
     delivered = models.BooleanField(default=False)
     ordered = models.BooleanField(default=False)
     date_ordered = models.DateTimeField(auto_now_add=True)

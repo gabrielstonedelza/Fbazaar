@@ -92,7 +92,7 @@ def add_to_pending(request,id):
     order = get_object_or_404(Order,id=id)
     serializer = PendingOrdersSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(user=request.user,order=order)
+        serializer.save(order=order)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

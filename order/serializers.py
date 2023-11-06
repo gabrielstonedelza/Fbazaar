@@ -12,9 +12,9 @@ class OrderSerializer(serializers.ModelSerializer):
 class PendingOrdersSerializer(serializers.ModelSerializer):
     class Meta:
         model = PendingOrders
-        fields = ['id', 'user_with_order', 'order', 'user', 'date_created', 'order_status',
+        fields = ['id', 'user_with_order', 'order', 'date_created', 'order_status',
                   'get_ordered_username', 'get_order_code','pass_pending','get_items']
-        read_only_fields = ['user','order']
+        read_only_fields = ['order']
 
 class ProcessingOrdersSerializer(serializers.ModelSerializer):
     class Meta:

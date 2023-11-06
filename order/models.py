@@ -101,7 +101,6 @@ class ItemsPickedUp(models.Model):
 class PendingOrders(models.Model):
     user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="status_pending")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_updating_pending")
     order_status = models.CharField(max_length=70, choices=ORDER_STATUS, default="Not Processed")
     pass_pending = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)

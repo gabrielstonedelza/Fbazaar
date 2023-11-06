@@ -250,7 +250,7 @@ def get_all_my_picked_up_orders(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_delivered_orders(request):
-    orders = ItemsDroppedOff.objects.filter(user_with_order=request.user).filter(order_status="Delivered").order_by('-date_ordered')
+    orders = ItemsDroppedOff.objects.filter(user_with_order=request.user).filter(order_status="Delivered").order_by('-date_created')
     serializer = ItemsDroppedOffSerializer(orders, many=True)
     return Response(serializer.data)
 

@@ -62,6 +62,21 @@ class Order(models.Model):
             my_dict["Size"].append(i.item.size)
         return my_dict
 
+    def get_items(self):
+        all_items_names = []
+        all_items_sizes = []
+        all_items_pictures = []
+        all_items_prices = []
+
+        for i in self.items.all():
+            all_items_names.append(i.item.name)
+            all_items_sizes.append(i.item.size)
+            all_items_prices.append(i.item.old_price)
+            if i.item.picture:
+                item_pic = "https://f-bazaar.com" + i.item.picture.url
+                all_items_pictures.append(item_pic)
+        return all_items_names,all_items_sizes,all_items_pictures,all_items_prices
+
 class ClearedPickUps(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)

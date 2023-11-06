@@ -234,7 +234,7 @@ def get_all_my_pending_orders(request):
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_processing_orders(request):
     orders = ProcessingOrders.objects.filter(user_with_order=request.user).filter(order_status="Processing").filter(pass_processing=False).order_by(
-        '-date_ordered')
+        '-date_created')
     serializer = ProcessingOrdersSerializer(orders, many=True)
     return Response(serializer.data)
 

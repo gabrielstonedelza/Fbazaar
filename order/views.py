@@ -243,7 +243,7 @@ def assign_driver_to_order(request,id):
     order = get_object_or_404(OrderItem, id=id)
     serializer = AssignDriverToOrderSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(order_item=order)
+        serializer.save(order=order)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

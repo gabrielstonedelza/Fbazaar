@@ -106,7 +106,7 @@ class PendingOrders(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
+        return self.order.unique_order_code
 
     def get_ordered_username(self):
         return self.order.user.username

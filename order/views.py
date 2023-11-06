@@ -75,7 +75,7 @@ def get_my_orders(request):
 @api_view(['GET', 'PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def update_order(request, id):
-    order = get_object_or_404(OrderItem, id=id)
+    order = get_object_or_404(Order, id=id)
     serializer = OrderSerializer(order, data=request.data)
     if serializer.is_valid():
         serializer.save(user=request.user)

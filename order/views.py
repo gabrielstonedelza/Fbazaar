@@ -210,7 +210,7 @@ def get_all_delivered_orders(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_pending_orders(request):
-    orders = Order.objects.filter(user=request.user).filter(order_status="Pending").order_by('-date_ordered')
+    orders = Order.objects.filter(user=request.user).filter(order_status="Pending").filter().order_by('-date_ordered')
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 

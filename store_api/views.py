@@ -67,7 +67,7 @@ def get_all_verified_items(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_unverified_items(request):
-    items = StoreItem.objects.filter(item_verified=False).order_by('-date_created')
+    items = StoreItem.objects.filter(item_verified=False).filter(item_rejected=False).order_by('-date_created')
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 

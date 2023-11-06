@@ -34,6 +34,7 @@ class StoreItem(models.Model):
     quantity_qualify_for_free_delivery = models.IntegerField(default=20)
     quantity_needed_for_wholesale_price = models.IntegerField(default=20)
     item_verified = models.BooleanField(default=False)
+    item_rejected = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

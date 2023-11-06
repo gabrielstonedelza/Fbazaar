@@ -114,6 +114,13 @@ class PendingOrders(models.Model):
     def get_order_code(self):
         return self.order.unique_order_code
 
+    def get_items(self):
+        all_items = []
+        for i in self.order.items.all():
+            all_items.append(i.item)
+
+        return all_items
+
 class ProcessingOrders(models.Model):
     user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="status_processing")

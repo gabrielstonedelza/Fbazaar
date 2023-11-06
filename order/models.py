@@ -70,7 +70,8 @@ class ClearedPickUps(models.Model):
 
 
 class AssignDriverToOrder(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    user_with_order =  models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="order_being_assigned")
     driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="assigned_driver")
     date_created = models.DateTimeField(auto_now_add=True)
 
@@ -96,10 +97,46 @@ class ItemsPickedUp(models.Model):
     def get_username(self):
         return self.user.username
 
+class PendingOrders(models.Model):
+    user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="status_pending")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_updating_pending")
+    order_status = models.CharField(max_length=70, choices=ORDER_STATUS, default="Not Processed")
+    pass_pending = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+
+    def get_ordered_username(self):
+        return self.order.user.username
+
+    def get_order_code(self):
+        return self.order.unique_order_code
+
+class ProcessingOrders(models.Model):
+    user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="status_processing")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_updating_processing")
+    order_status = models.CharField(max_length=70, choices=ORDER_STATUS, default="Not Processed")
+    pass_processing = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
+
+    def get_ordered_username(self):
+        return self.order.user.username
+
+    def get_order_code(self):
+        return self.order.unique_order_code
 
 class ItemsInTransit(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="status_in_transit")
     driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="driver_sending_order")
+    order_status = models.CharField(max_length=70, choices=ORDER_STATUS, default="Not Processed")
+    pass_in_transit = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -108,37 +145,29 @@ class ItemsInTransit(models.Model):
     def get_username(self):
         return self.user.username
 
+    def get_ordered_username(self):
+        return self.order.user.username
+
+    def get_order_code(self):
+        return self.order.unique_order_code
+
 
 class ItemsDroppedOff(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="status_delivered")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="driver")
+    order_status = models.CharField(max_length=70, choices=ORDER_STATUS, default="Not Processed")
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.order.pk} has been dropped off {self.order.user.username}'s location by driver"
 
-    def get_item_name(self):
-        return self.order.ordered_item.name
-
-    def get_item_size(self):
-        return self.order.ordered_item.size
-
-    def get_item_pic(self):
-        if self.order.ordered_item.picture:
-            return "https://f-bazaar.com" + self.order.ordered_item.picture.url
-        return ''
 
     def get_ordered_username(self):
         return self.order.user.username
 
-    def get_order_quantity(self):
-        return self.order.quantity
-
-    def get_order_status(self):
-        return self.order.order_status
-
-    def get_item_price(self):
-        return self.order.price
+    def get_order_code(self):
+        return self.order.unique_order_code
 
 
 class QualifiedForBonuses(models.Model):
@@ -165,3 +194,4 @@ class DriversCurrentLocation(models.Model):
 
     def get_order_user(self):
         return self.user.username
+

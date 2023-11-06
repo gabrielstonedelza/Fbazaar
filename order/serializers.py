@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Order,ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,QualifiedForBonuses,AssignDriverToOrder,DriversCurrentLocation,ItemsInTransit
+from .models import Order,ClearedPickUps, ItemsPickedUp,ItemsDroppedOff,QualifiedForBonuses,AssignDriverToOrder,DriversCurrentLocation,ItemsInTransit,PendingOrders,ProcessingOrders
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -9,11 +9,26 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ['user']
 
 
+class PendingOrdersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PendingOrders
+        fields = ['id', 'user_with_order', 'order', 'user', 'date_created', 'order_status',
+                  'get_ordered_username', 'get_order_code','pass_pending']
+        read_only_fields = ['user','order']
+
+class ProcessingOrdersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProcessingOrders
+        fields = ['id', 'user_with_order', 'order', 'user', 'date_created', 'order_status',
+                  'get_ordered_username', 'get_order_code','pass_processing']
+        read_only_fields = ['user','order']
+
 class ItemsInTransitSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemsInTransit
-        fields = ['id','order','driver','date_created']
-        read_only_fields = ['driver']
+        fields = ['id','user_with_order','order','driver','date_created','order_status','get_username','get_ordered_username','get_order_code','pass_in_transit']
+        read_only_fields = ['driver','order']
+
 class DriversCurrentLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = DriversCurrentLocation
@@ -41,5 +56,5 @@ class ItemsPickedUpSerializer(serializers.ModelSerializer):
 class ItemsDroppedOffSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemsDroppedOff
-        fields = ['id','order','user','date_created','get_item_name','get_item_size','get_item_pic','get_ordered_username','get_order_quantity','get_order_status','get_item_price']
-        read_only_fields = ['user']
+        fields = ['id','order','user','date_created','get_order_code','order_status','get_ordered_username','user_with_order']
+        read_only_fields = ['user','order']

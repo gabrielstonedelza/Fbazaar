@@ -90,3 +90,21 @@ class ItemRemarks(models.Model):
         if de_user:
             return "https://f-bazaar.com" + de_user.profile_pic.url
         return ''
+
+
+class NotifyAboutItemVerified(models.Model):
+    item = models.ForeignKey(StoreItem, on_delete=models.CASCADE,related_name="item_to_verify",)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_verified = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.item.name
+
+
+class NotifyAboutItemRejected(models.Model):
+    item = models.ForeignKey(StoreItem, on_delete=models.CASCADE, related_name="item_to_reject", )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_rejected = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.item.name

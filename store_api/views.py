@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 
 from .models import StoreItem,AddToPriceChanged,ItemRatings,ItemRemarks
-from .serializers import StoreItemSerializer,ItemRatingsSerializer,AddToPriceChangedSerializer,ItemRemarksSerializer
+from .serializers import StoreItemSerializer,ItemRatingsSerializer,AddToPriceChangedSerializer,ItemRemarksSerializer,NotifyAboutItemVerifiedSerializer,NotifyAboutItemRejectedSerializer
 
 from django.http import Http404
 from rest_framework.decorators import api_view, permission_classes
@@ -10,6 +10,27 @@ from rest_framework.response import Response
 from datetime import datetime, date, time
 from rest_framework import filters
 
+
+# verify items
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def verify_item(request,id):
+    item = get_object_or_404(StoreItem,id=id)
+    serializer = NotifyAboutItemVerifiedSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(item=item)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def reject_item(request,id):
+    item = get_object_or_404(StoreItem, id=id)
+    serializer = NotifyAboutItemRejectedSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(item=item)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # add and update items
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])

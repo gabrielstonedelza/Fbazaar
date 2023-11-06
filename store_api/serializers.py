@@ -1,5 +1,17 @@
 from rest_framework import serializers
-from .models import StoreItem,AddToPriceChanged,ItemRatings,ItemRemarks
+from .models import StoreItem,AddToPriceChanged,ItemRatings,ItemRemarks, NotifyAboutItemVerified,NotifyAboutItemRejected
+
+
+class NotifyAboutItemVerifiedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NotifyAboutItemVerified
+        fields = ['id','item','user','date_verified']
+        read_only_fields = ['item']
+class NotifyAboutItemRejectedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NotifyAboutItemRejected
+        fields = ['id','item','user','date_rejected']
+        read_only_fields = ['item']
 
 
 class StoreItemSerializer(serializers.ModelSerializer):

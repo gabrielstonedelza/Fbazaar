@@ -16,6 +16,8 @@ urlpatterns = [
     path("items/<int:id>/detail/",views.get_item_detail),
     path("items/<int:id>/update/",views.update_item),
     path("items/<int:id>/delete/",views.delete_item),
+    path("items/<int:id>/approve/",views.verify_item),
+    path("items/<int:id>/reject/",views.reject_item),
 
     path("add_to_price_change/",views.add_to_price_change),
 

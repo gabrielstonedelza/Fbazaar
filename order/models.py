@@ -61,8 +61,6 @@ class Order(models.Model):
                 my_dict["Picture"].append(item_pic)
             my_dict["Name"].append(i.item.name)
             my_dict["Size"].append(i.item.size)
-
-        # print(ordered_items)
         return my_dict
 
 class ClearedPickUps(models.Model):

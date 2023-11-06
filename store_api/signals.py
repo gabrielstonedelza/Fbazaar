@@ -3,9 +3,31 @@ from django.dispatch import receiver
 from notifications.models import Notifications
 
 from users.models import User
-from .models import StoreItem,AddToPriceChanged,ItemRatings,ItemRemarks
+from .models import StoreItem,AddToPriceChanged,ItemRatings,ItemRemarks, NotifyAboutItemVerified,NotifyAboutItemRejected
 
+@receiver(post_save, sender=NotifyAboutItemVerified)
+def alert_verified_item(sender, created, instance, **kwargs):
+    title = f"Item Verified"
+    message = f"Hi, your item with the name {instance.item.name} was verified"
+    admin_user = User.objects.get(id=1)
 
+    if created:
+        Notifications.objects.create(item_id=instance.id,
+                                 notification_title=title, notification_message=message,
+                                 notification_from=admin_user, notification_to=instance.user,
+                                 )
+
+@receiver(post_save, sender=NotifyAboutItemRejected)
+def alert_rejected_item(sender, created, instance, **kwargs):
+    title = f"Item Rejected"
+    message = f"Hi, your item with the name {instance.item.name} was rejected because it did not meet the requirements."
+    admin_user = User.objects.get(id=1)
+
+    if created:
+        Notifications.objects.create(item_id=instance.id,
+                                 notification_title=title, notification_message=message,
+                                 notification_from=admin_user, notification_to=instance.user,
+                                 )
 
 @receiver(post_save, sender=StoreItem)
 def alert_new_item(sender, created, instance, **kwargs):

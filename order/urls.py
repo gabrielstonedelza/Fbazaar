@@ -27,6 +27,8 @@ urlpatterns = [
     path("order/<int:id>/update/",views.update_order),
     path("order/<int:id>/delete/",views.delete_order),
     path("delete_pending_order/<int:id>/",views.delete_pending_order),
+    path("delete_processing_order/<int:id>/",views.delete_processing_order),
+    path("delete_transit_order/<int:id>/",views.delete_transit_order),
 
 #
     path("get_all_my_pending_orders/",views.get_all_my_pending_orders),

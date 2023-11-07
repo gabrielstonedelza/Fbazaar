@@ -94,6 +94,26 @@ def delete_pending_order(request, id):
         return Http404
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['GET', 'DELETE'])
+@permission_classes([permissions.IsAuthenticated])
+def delete_processing_order(request, id):
+    try:
+        order = get_object_or_404(ProcessingOrders, id=id)
+        order.delete()
+    except ProcessingOrders.DoesNotExist:
+        return Http404
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'DELETE'])
+@permission_classes([permissions.IsAuthenticated])
+def delete_transit_order(request, id):
+    try:
+        order = get_object_or_404(ItemsInTransit, id=id)
+        order.delete()
+    except ItemsInTransit.DoesNotExist:
+        return Http404
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 # order status
 @api_view(['POST'])

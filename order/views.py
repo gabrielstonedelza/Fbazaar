@@ -115,6 +115,17 @@ def delete_transit_order(request, id):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@api_view(['GET', 'DELETE'])
+@permission_classes([permissions.IsAuthenticated])
+def delete_assigned_order(request, id):
+    try:
+        order = get_object_or_404(AssignDriverToOrder, id=id)
+        order.delete()
+    except AssignDriverToOrder.DoesNotExist:
+        return Http404
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 # order status
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])

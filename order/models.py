@@ -77,6 +77,9 @@ class AssignDriverToOrder(models.Model):
     driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="assigned_driver")
     date_created = models.DateTimeField(auto_now_add=True)
 
+    def get_user_phone_number(self):
+        return self.order.user.phone
+
     def get_order_drop_off_lat(self):
         return self.order.drop_off_location_lat
 

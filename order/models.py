@@ -52,16 +52,6 @@ class Order(models.Model):
     def __str__(self):
         return self.user.username
 
-    def get_item_details(self):
-        my_dict = {"Name": [], "Size": [], "Picture": []}
-        for i in self.items.all():
-            if i.item.picture:
-                item_pic = "https://f-bazaar.com" + i.item.picture.url
-                my_dict["Picture"].append(item_pic)
-            my_dict["Name"].append(i.item.name)
-            my_dict["Size"].append(i.item.size)
-        return my_dict
-
 
 class ClearedPickUps(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

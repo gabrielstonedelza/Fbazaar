@@ -77,6 +77,12 @@ class AssignDriverToOrder(models.Model):
     driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="assigned_driver")
     date_created = models.DateTimeField(auto_now_add=True)
 
+    def get_order_drop_off_lat(self):
+        return self.order.drop_off_location_lat
+
+    def get_order_drop_off_lng(self):
+        return self.order.drop_off_location_lng
+
     def __str__(self):
         return f"{self.driver.username} has been assigned to order {self.order.items.name}"
 

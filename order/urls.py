@@ -42,6 +42,7 @@ urlpatterns = [
     path("get_all_drivers_delivered_orders/<str:driver>/",views.get_all_drivers_delivered_orders),
     path("get_all_my_assigned_orders/",views.get_all_my_assigned_orders),
     path("get_all_drivers_assigned_orders/",views.get_all_drivers_assigned_orders),
+    path("driver_my_delivered_orders/",views.driver_my_delivered_orders),
 
 #
     path("add_drivers_current_location/<int:id>/",views.add_drivers_current_location),

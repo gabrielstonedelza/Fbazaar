@@ -177,7 +177,7 @@ class ItemsInTransit(models.Model):
         return f"{self.order.pk} has been picked up by driver"
 
     def get_username(self):
-        return self.user.username
+        return self.driver.username
 
     def get_ordered_username(self):
         return self.order.user.username

@@ -26,6 +26,7 @@ urlpatterns = [
     path("add_to_dropped_off_orders/<int:id>/",views.add_dropped_off_orders),
     path("order/<int:id>/update/",views.update_order),
     path("order/<int:id>/delete/",views.delete_order),
+    path("delete_pending_order/<int:id>/",views.delete_pending_order),
 
 #
     path("get_all_my_pending_orders/",views.get_all_my_pending_orders),

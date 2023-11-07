@@ -84,6 +84,16 @@ def delete_order(request, id):
         return Http404
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['GET', 'DELETE'])
+@permission_classes([permissions.IsAuthenticated])
+def delete_pending_order(request, id):
+    try:
+        order = get_object_or_404(PendingOrders, id=id)
+        order.delete()
+    except PendingOrders.DoesNotExist:
+        return Http404
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 # order status
 @api_view(['POST'])

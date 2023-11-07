@@ -185,7 +185,7 @@ def get_all_pending_orders(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_processing_orders(request):
-    orders = ProcessingOrders.objects.filter(order_status="Processing").filter(pass_processing=False).order_by('-date_ordered')
+    orders = ProcessingOrders.objects.filter(order_status="Processing").filter(pass_processing=False).order_by('-date_created')
     serializer = ProcessingOrdersSerializer(orders, many=True)
     return Response(serializer.data)
 
@@ -214,7 +214,7 @@ def get_customers_order_in_transit(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_delivered_orders(request):
-    orders = ItemsDroppedOff.objects.filter(order_status="Delivered").order_by('-date_ordered')
+    orders = ItemsDroppedOff.objects.filter(order_status="Delivered").order_by('-date_created')
     serializer = ItemsDroppedOffSerializer(orders, many=True)
     return Response(serializer.data)
 # send_my_mail(f"Hi from ConnectDjango", settings.EMAIL_HOST_USER, i.email, {"name": i.username},

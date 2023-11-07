@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 from store_api.models import StoreItem
-from order.models import Order
+from order.models import Order,PendingOrders
 from order.serializers import OrderSerializer
 from ordered.models import Ordered
 
@@ -40,6 +40,7 @@ def item_check_out(request,pm,dm,drop_loc_lat,drop_off_lng,unique_code,total_pri
 
     if serializer.is_valid():
         ordering_user = Order.objects.create(user=request.user,ordered=True,payment_method=pm,drop_off_location_lat=drop_loc_lat,drop_off_location_lng=drop_off_lng,order_status="Pending",unique_order_code=unique_code,delivery_method=dm,order_total_price=total_price)
+        PendingOrders.objects.create(user_with_order=request.user,order=ordering_user,order_status="Pending")
         for i in items:
             Ordered.objects.create(user=request.user,item=i.item,ordered=True,unique_order_code=unique_code)
             i.ordered = True
@@ -118,15 +119,6 @@ def get_ordered_items(request):
     serializer = OrderItemSerializer(ordered_items, many=True)
     return Response(serializer.data)
 
-# @api_view(['GET'])
-# @permission_classes([permissions.IsAuthenticated])
-# def check_out_order_items(request):
-#     cart_items = OrderItem.objects.filter(user=request.user).filter(ordered=False).order_by('-date_ordered')
-#     for i in cart_items:
-#         i.ordered = True
-#         i.save()
-#     serializer = OrderItemSerializer(cart_items, many=True)
-#     return Response(serializer.data)
 
 @api_view(['GET', 'DELETE'])
 @permission_classes([permissions.IsAuthenticated])

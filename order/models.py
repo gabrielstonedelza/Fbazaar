@@ -145,6 +145,16 @@ class ProcessingOrders(models.Model):
     def get_order_code(self):
         return self.order.unique_order_code
 
+    def get_item_details(self):
+        my_dict = {"Name": [], "Size": [], "Picture": []}
+        for i in self.order.items.all():
+            if i.item.picture:
+                item_pic = "https://f-bazaar.com" + i.item.picture.url
+                my_dict["Picture"].append(item_pic)
+            my_dict["Name"].append(i.item.name)
+            my_dict["Size"].append(i.item.size)
+        return my_dict
+
 class ItemsInTransit(models.Model):
     user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE,related_name="status_in_transit")
@@ -165,6 +175,16 @@ class ItemsInTransit(models.Model):
     def get_order_code(self):
         return self.order.unique_order_code
 
+    def get_item_details(self):
+        my_dict = {"Name": [], "Size": [], "Picture": []}
+        for i in self.order.items.all():
+            if i.item.picture:
+                item_pic = "https://f-bazaar.com" + i.item.picture.url
+                my_dict["Picture"].append(item_pic)
+            my_dict["Name"].append(i.item.name)
+            my_dict["Size"].append(i.item.size)
+        return my_dict
+
 
 class ItemsDroppedOff(models.Model):
     user_with_order = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -182,6 +202,16 @@ class ItemsDroppedOff(models.Model):
 
     def get_order_code(self):
         return self.order.unique_order_code
+
+    def get_item_details(self):
+        my_dict = {"Name": [], "Size": [], "Picture": []}
+        for i in self.order.items.all():
+            if i.item.picture:
+                item_pic = "https://f-bazaar.com" + i.item.picture.url
+                my_dict["Picture"].append(item_pic)
+            my_dict["Name"].append(i.item.name)
+            my_dict["Size"].append(i.item.size)
+        return my_dict
 
 
 class QualifiedForBonuses(models.Model):

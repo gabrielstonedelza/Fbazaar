@@ -20,13 +20,13 @@ class ProcessingOrdersSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessingOrders
         fields = ['id', 'user_with_order', 'order', 'user', 'date_created', 'order_status',
-                  'get_ordered_username', 'get_order_code','pass_processing']
+                  'get_ordered_username', 'get_order_code','pass_processing','get_item_details']
         read_only_fields = ['user','order']
 
 class ItemsInTransitSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemsInTransit
-        fields = ['id','user_with_order','order','driver','date_created','order_status','get_username','get_ordered_username','get_order_code','pass_in_transit']
+        fields = ['id','user_with_order','order','driver','date_created','order_status','get_username','get_ordered_username','get_order_code','pass_in_transit','get_item_details']
         read_only_fields = ['driver','order']
 
 class DriversCurrentLocationSerializer(serializers.ModelSerializer):
@@ -56,5 +56,5 @@ class ItemsPickedUpSerializer(serializers.ModelSerializer):
 class ItemsDroppedOffSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemsDroppedOff
-        fields = ['id','order','user','date_created','get_order_code','order_status','get_ordered_username','user_with_order']
+        fields = ['id','order','user','date_created','get_order_code','order_status','get_ordered_username','user_with_order','get_item_details']
         read_only_fields = ['user','order']

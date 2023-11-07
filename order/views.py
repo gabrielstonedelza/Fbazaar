@@ -325,6 +325,21 @@ def get_all_my_assigned_orders(request):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
+def get_all_drivers_assigned_orders(request,driver):
+    orders = AssignDriverToOrder.objects.filter(driver=driver).order_by('-date_created')
+    serializer = AssignDriverToOrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_drivers_delivered_orders(request,driver):
+    orders = ItemsDroppedOff.objects.filter(user=driver).order_by('-date_created')
+    serializer = ItemsDroppedOffSerializer(orders, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def get_all_drivers_assigned_orders(request):
     orders = OrderItem.objects.filter(assigned_driver=request.user).filter(delivered=False).order_by('-date_ordered')
     serializer = OrderItemSerializer(orders, many=True)

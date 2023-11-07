@@ -87,6 +87,16 @@ class AssignDriverToOrder(models.Model):
     def get_ordered_username(self):
         return self.order.user.username
 
+    def get_item_details(self):
+        my_dict = {"Name": [], "Size": [], "Picture": []}
+        for i in self.order.items.all():
+            if i.item.picture:
+                item_pic = "https://f-bazaar.com" + i.item.picture.url
+                my_dict["Picture"].append(item_pic)
+            my_dict["Name"].append(i.item.name)
+            my_dict["Size"].append(i.item.size)
+        return my_dict
+
 
 class ItemsPickedUp(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

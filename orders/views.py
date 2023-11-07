@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from store_api.models import StoreItem
 from order.models import Order
 from order.serializers import OrderSerializer
+from ordered.models import Ordered
 
 
 
@@ -38,9 +39,9 @@ def item_check_out(request,pm,dm,drop_loc_lat,drop_off_lng,unique_code,total_pri
     serializer = OrderSerializer(data=request.data)
 
     if serializer.is_valid():
-        # checking if order item is already in cart
         ordering_user = Order.objects.create(user=request.user,ordered=True,payment_method=pm,drop_off_location_lat=drop_loc_lat,drop_off_location_lng=drop_off_lng,order_status="Pending",unique_order_code=unique_code,delivery_method=dm,order_total_price=total_price)
         for i in items:
+            Ordered.objects.create(user=request.user,item=i.item,ordered=True,unique_order_code=unique_code)
             i.ordered = True
             i.save()
             ordering_user.items.add(i)

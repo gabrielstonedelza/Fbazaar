@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'chat.apps.ChatConfig',
     'orders.apps.OrdersConfig',
     'order.apps.OrderConfig',
+    'ordered.apps.OrderedConfig',
     'cart.apps.CartConfig',
     'djoser',
     'corsheaders',

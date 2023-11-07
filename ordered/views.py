@@ -13,11 +13,11 @@ from order.models import Order
 def get_ordered_items(request,unique_code):
     ordered = Ordered.objects.filter(user=request.user).filter(ordered=True).filter(unique_order_code=unique_code).order_by('-date_ordered')
     serializer = OrderedSerializer(ordered, many=True)
-    return (Response(serializer.data)
+    return Response(serializer.data)
 
 
-@api_view(['GET']))
-@permission_classes([permissions.AllowAny])
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def get_ordered_items_admin(request,unique_code):
     ordered = Ordered.objects.filter(ordered=True).filter(unique_order_code=unique_code).order_by('-date_ordered')
     serializer = OrderedSerializer(ordered, many=True)

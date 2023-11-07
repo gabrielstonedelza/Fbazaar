@@ -112,6 +112,9 @@ class PendingOrders(models.Model):
     def get_ordered_username(self):
         return self.order.user.username
 
+    def get_total_order_price(self):
+        return self.order.order_total_price
+
     def get_order_code(self):
         return self.order.unique_order_code
 

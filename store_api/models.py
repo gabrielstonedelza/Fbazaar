@@ -2,6 +2,7 @@ from django.db import models
 from PIL import Image
 from users.models import User
 from profiles.models import Profile
+from stores.models import RegisterStore
 
 ITEM_CATEGORIES = (
     ("Water","Water"),

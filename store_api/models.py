@@ -18,7 +18,7 @@ ITEM_SIZE =(
 
 class StoreItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
-    company_name = models.CharField(max_length=100,default="FBazaar")
+    store = models.ForeignKey(RegisterStore, on_delete=models.CASCADE,default=1,related_name="registered_stores")
     name = models.CharField(max_length=255,blank=True)
     category = models.CharField(max_length=80, default="Water",choices=ITEM_CATEGORIES,blank=True)
     size = models.CharField(max_length=30, choices=ITEM_SIZE, default="Small",blank=True)
@@ -54,6 +54,9 @@ class StoreItem(models.Model):
         if self.picture:
             return "https://f-bazaar.com" + self.picture.url
         return ''
+
+    def get_store_name(self):
+        return self.store.name
 
 
 class AddToPriceChanged(models.Model):

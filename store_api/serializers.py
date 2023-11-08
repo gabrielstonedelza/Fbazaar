@@ -17,7 +17,7 @@ class NotifyAboutItemRejectedSerializer(serializers.ModelSerializer):
 class StoreItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = StoreItem
-        fields = ['id','user','company_name','name','category','size','old_price','new_price','retail_price','wholesale_price','picture','description','date_created','quantity_qualify_for_free_delivery','exclusive','promotion','quantity_needed_for_wholesale_price','get_item_pic','volume','item_verified','item_rejected']
+        fields = ['id','user','store','name','category','size','old_price','new_price','retail_price','wholesale_price','picture','description','date_created','quantity_qualify_for_free_delivery','exclusive','promotion','quantity_needed_for_wholesale_price','get_item_pic','volume','item_verified','item_rejected','get_store_name']
 
 
 class ItemRatingsSerializer(serializers.ModelSerializer):

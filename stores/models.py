@@ -7,7 +7,7 @@ class RegisterStore(models.Model):
     location = models.CharField(max_length=255,blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
-    def __str__self(self):
+    def __str__(self):
         return self.name
 
     def get_username(self):

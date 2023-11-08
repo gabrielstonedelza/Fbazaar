@@ -38,6 +38,14 @@ def get_all_customers(request):
 
 @api_view(['GET'])
 @permission_classes([permissions.AllowAny])
+def get_all_stock_managers(request):
+    drivers = User.objects.filter(user_type="Stock Manager")
+    serializer = UsersSerializer(drivers, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
 def get_all_drivers(request):
     drivers = User.objects.filter(user_type="Driver")
     serializer = UsersSerializer(drivers, many=True)

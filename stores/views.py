@@ -34,3 +34,10 @@ def get_my_store(request):
     serializer = RegisterStoreSerializer(my_store, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_stores(request):
+    stores = RegisterStore.objects.all().order_by('-date_created')
+    serializer = RegisterStoreSerializer(stores, many=True)
+    return Response(serializer.data)
+

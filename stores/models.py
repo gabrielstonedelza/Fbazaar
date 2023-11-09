@@ -2,7 +2,7 @@ from django.db import models
 from users.models import User
 
 class RegisterStore(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255,unique=True)
     location = models.CharField(max_length=255,blank=True)
     date_created = models.DateTimeField(auto_now_add=True)

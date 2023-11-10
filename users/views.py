@@ -72,3 +72,11 @@ def get_admin(request):
 def send_otp(request,otp,email,username):
     send_my_mail(f"Hello from FBazaar", settings.EMAIL_HOST_USER, email, {"name": username,"OTP": otp},"email_templates/sendotp.html")
     return Response()
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_user_details(request):
+    user_details = User.objects.filter(username=request.user.username)
+    serializer = UsersSerializer(user_details, many=True)
+    return Response(serializer.data)

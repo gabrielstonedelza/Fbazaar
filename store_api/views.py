@@ -85,7 +85,7 @@ def update_item(request, id):
     item = get_object_or_404(StoreItem, id=id)
     serializer = StoreItemSerializer(item, data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

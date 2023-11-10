@@ -26,6 +26,9 @@ class Profile(models.Model):
     def get_users_fullname(self):
         return self.user.name
 
+    def get_user_store_name(self):
+        return self.user.store
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 

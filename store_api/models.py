@@ -6,6 +6,11 @@ from profiles.models import Profile
 ITEM_CATEGORIES = (
     ("Water","Water"),
     ("Drinks","Drinks"),
+    ("Furniture","Furniture"),
+    ("Electronics","Electronics"),
+    ("Fashion","Fashion"),
+    ("Beauty & Saloon","Beauty & Saloon"),
+    ("Office","Office"),
 )
 
 ITEM_SIZE =(

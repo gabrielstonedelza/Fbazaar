@@ -70,12 +70,12 @@ class User(AbstractUser):
     phone = models.CharField(max_length=15, unique=True)
     user_type = models.CharField(max_length=80,choices=USER_TYPES,default="Customer")
     name = models.CharField(max_length=100, unique=True)
-    store_name = models.CharField(max_length=100, unique=True, default="FBazaar")
-    store_location = models.CharField(max_length=100,default="Airport Round About")
+    store = models.CharField(max_length=100, unique=True, default="FBazaar",blank=True)
+    store_location = models.CharField(max_length=100,default="Airport Round About",blank=True)
     user_blocked = models.BooleanField(default=False)
 
 
-    REQUIRED_FIELDS = ['username','phone','user_type','name','store_name','store_location']
+    REQUIRED_FIELDS = ['username','phone','user_type','name','store','store_location']
     USERNAME_FIELD = 'email'
 
     def get_username(self):

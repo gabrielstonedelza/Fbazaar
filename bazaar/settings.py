@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'notifications.apps.NotificationsConfig',
     'profiles.apps.ProfilesConfig',
     'store_api.apps.StoreApiConfig',
-    'stores.apps.StoresConfig',
     'users.apps.UsersConfig',
     'chat.apps.ChatConfig',
     'orders.apps.OrdersConfig',

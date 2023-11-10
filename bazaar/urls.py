@@ -13,7 +13,6 @@ urlpatterns = [
     path('notifications/', include('notifications.urls')),
     path('profile/', include('profiles.urls')),
     path('store_api/', include('store_api.urls')),
-    path('store/', include("stores.urls")),
     path('users/', include("users.urls")),
     path('orders/', include("orders.urls")),
     path('order/', include("order.urls")),

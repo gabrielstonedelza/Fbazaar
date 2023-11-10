@@ -54,9 +54,6 @@ class StoreItem(models.Model):
             return "https://f-bazaar.com" + self.picture.url
         return ''
 
-    def get_store_name(self):
-        return self.store.name
-
 
 class AddToPriceChanged(models.Model):
     item = models.ForeignKey(StoreItem,on_delete=models.CASCADE)

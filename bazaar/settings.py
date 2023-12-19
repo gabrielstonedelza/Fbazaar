@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'order.apps.OrderConfig',
     'ordered.apps.OrderedConfig',
     'cart.apps.CartConfig',
+    'post.apps.PostConfig',
     'djoser',
     'corsheaders',
     'crispy_forms',

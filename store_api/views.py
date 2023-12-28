@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-
+from asgiref.sync import sync_to_async
 from .models import StoreItem,AddToPriceChanged,ItemRatings,ItemRemarks
 from .serializers import StoreItemSerializer,ItemRatingsSerializer,AddToPriceChangedSerializer,ItemRemarksSerializer,NotifyAboutItemVerifiedSerializer,NotifyAboutItemRejectedSerializer
 
@@ -12,6 +12,7 @@ from rest_framework import filters
 
 
 # verify items
+@sync_to_async
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def verify_item(request,id):
@@ -22,6 +23,7 @@ def verify_item(request,id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@sync_to_async
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def reject_item(request,id):
@@ -32,6 +34,7 @@ def reject_item(request,id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # add and update items
+@sync_to_async
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def add_item(request):
@@ -41,7 +44,7 @@ def add_item(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_my_items(request):
@@ -49,7 +52,7 @@ def get_all_my_items(request):
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
-
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_items(request):
@@ -57,6 +60,7 @@ def get_all_items(request):
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_verified_items(request):
@@ -64,6 +68,7 @@ def get_all_verified_items(request):
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_unverified_items(request):
@@ -71,7 +76,7 @@ def get_all_unverified_items(request):
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
-
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_item_detail(request,id):
@@ -79,6 +84,7 @@ def get_item_detail(request,id):
     serializer = StoreItemSerializer(item, many=False)
     return Response(serializer.data)
 
+@sync_to_async
 @api_view(['GET', 'PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def update_item(request, id):
@@ -89,6 +95,8 @@ def update_item(request, id):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@sync_to_async
 @api_view(['GET', 'DELETE'])
 @permission_classes([permissions.IsAuthenticated])
 def delete_item(request, id):
@@ -101,6 +109,7 @@ def delete_item(request, id):
 
 
 # add to price change starts here
+@sync_to_async
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def add_to_price_change(request):
@@ -111,6 +120,7 @@ def add_to_price_change(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # remarks
+@sync_to_async
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def add_remarks(request,id):
@@ -121,7 +131,7 @@ def add_remarks(request,id):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_remarks(request):
@@ -129,6 +139,7 @@ def get_all_remarks(request):
     serializer = ItemRemarksSerializer(remarks, many=True)
     return Response(serializer.data)
 
+@sync_to_async
 @api_view(['GET', 'DELETE'])
 @permission_classes([permissions.IsAuthenticated])
 def delete_remark(request, id):
@@ -140,6 +151,7 @@ def delete_remark(request, id):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 # ratings
+@sync_to_async
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def add_rating(request):
@@ -149,7 +161,7 @@ def add_rating(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_ratings(request):
@@ -158,7 +170,7 @@ def get_all_ratings(request):
     return Response(serializer.data)
 
 # get item ratings and remarks
-
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_item_ratings(request,id):
@@ -167,6 +179,8 @@ def get_all_item_ratings(request,id):
     serializer = ItemRatingsSerializer(ratings, many=True)
     return Response(serializer.data)
 
+
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_item_remarks(request,id):
@@ -175,6 +189,8 @@ def get_all_item_remarks(request,id):
     serializer = ItemRemarksSerializer(remarks, many=True)
     return Response(serializer.data)
 
+
+@sync_to_async
 class SearchForItem(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = StoreItem.objects.filter(item_verified=True).order_by("-date_created")
@@ -184,6 +200,8 @@ class SearchForItem(generics.ListAPIView):
 
     # get exclusive, promotion and other items
 
+
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_exclusive_items(request):
@@ -191,7 +209,7 @@ def get_exclusive_items(request):
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
-
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_promotion_items(request):
@@ -200,6 +218,7 @@ def get_promotion_items(request):
     return Response(serializer.data)
 
 
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_other_items(request):
@@ -208,6 +227,7 @@ def get_other_items(request):
     return Response(serializer.data)
 
 
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_drinks(request):
@@ -215,6 +235,8 @@ def get_drinks(request):
     serializer = StoreItemSerializer(items, many=True)
     return Response(serializer.data)
 
+
+@sync_to_async
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_water(request):
